@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAP to Azure Secure Data Pipeline</title>
+    
+    <link rel="stylesheet" href="styles.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { goldgreen: '#494f02', navy: '#0f172a', lightNavy: '#1e293b', tealAccent: '#5eead4' }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-goldgreen text-slate-400 font-sans antialiased selection:bg-tealAccent selection:text-teal-900">
+
+    <div class="mx-auto min-h-screen max-w-screen-xl px-6 py-12 md:px-12 md:py-20 lg:px-24">
+        
+        <a href="index.html" class="group inline-flex items-center font-medium leading-tight text-tealAccent hover:text-teal-300 mb-10 transition-colors">
+            <span class="mr-2 transition-transform group-hover:-translate-x-1 motion-reduce:transition-none">&larr;</span> Back to Portfolio
+        </a>
+
+        <div class="mb-16 md:mb-24">
+            <header class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">Cloud & Integration</header>
+            <h1 class="text-3xl font-bold tracking-tight text-slate-200 sm:text-4xl mb-4">SAP to Azure Secure Data Pipeline</h1>
+            <p class="max-w-3xl text-base leading-relaxed text-slate-300 mb-6">
+                Developed a Node.js/Express microservice on GCP to establish a secure file upload pipeline between SAP ABAP and Azure Blob Storage. Engineered the flow to process <code>multipart/form-data</code> via Multer, implemented secure credential retrieval from Hashicorp Vault for Azure SDK authentication, and managed cross-cloud data streaming.
+            </p>
+            <ul class="flex flex-wrap">
+                <li class="mr-2 mt-2"><div class="flex items-center rounded-full bg-teal-400/10 px-4 py-1.5 text-sm font-medium text-tealAccent">Node.js</div></li>
+                <li class="mr-2 mt-2"><div class="flex items-center rounded-full bg-teal-400/10 px-4 py-1.5 text-sm font-medium text-tealAccent">GCP</div></li>
+                <li class="mr-2 mt-2"><div class="flex items-center rounded-full bg-teal-400/10 px-4 py-1.5 text-sm font-medium text-tealAccent">Azure Blob</div></li>
+                <li class="mr-2 mt-2"><div class="flex items-center rounded-full bg-teal-400/10 px-4 py-1.5 text-sm font-medium text-tealAccent">Hashicorp Vault</div></li>
+                <li class="mr-2 mt-2"><div class="flex items-center rounded-full bg-teal-400/10 px-4 py-1.5 text-sm font-medium text-tealAccent">SAP ABAP</div></li>
+            </ul>
+        </div>
+
+        <div class="diagram-container">
+            <div class="zones">
+                <div class="zone z1">SAP / On-Prem</div>
+                <div class="zone z2">Google Cloud Platform</div>
+                <div class="zone z3">Microsoft Azure</div>
+            </div>
+
+            <div class="flow" id="flow">
+                <div class="col">
+                    <div class="node sap" id="n-sap">
+                        <div class="node-top"><div class="icon sap">🏭</div><div><div class="node-title">SAP ABAP</div><div class="node-sub">HTTP Client</div></div></div>
+                        <div class="node-detail">POST multipart/form-data<br>over HTTPS</div>
+                    </div>
+                </div>
+
+                <div class="col mid">
+                    <div class="node gcp" id="n-express">
+                        <div class="node-top"><div class="icon gcp">⚡</div><div><div class="node-title">Express.js Route</div><div class="node-sub">Cloud Run · GCP</div></div></div>
+                        <div class="node-detail">Receives request<br>Validates auth headers</div>
+                    </div>
+                    <div class="node gcp" id="n-multer">
+                        <div class="node-top"><div class="icon gcp">📥</div><div><div class="node-title">Multer Middleware</div><div class="node-sub">Form-data parser</div></div></div>
+                        <div class="node-detail">Extracts file buffer<br>Validates MIME type</div>
+                    </div>
+                    <div class="node vault" id="n-vault">
+                        <div class="node-top"><div class="icon vault">🔐</div><div><div class="node-title">HashiCorp Vault</div><div class="node-sub">Secrets retrieval</div></div></div>
+                        <div class="node-detail">AppRole auth<br>Azure credentials (KV)</div>
+                    </div>
+                    <div class="node gcp" id="n-sdk">
+                        <div class="node-top"><div class="icon gcp">🌊</div><div><div class="node-title">Azure SDK Client</div><div class="node-sub">BlobServiceClient</div></div></div>
+                        <div class="node-detail">BlockBlobClient<br>Streams upload cross-cloud</div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="node azure" id="n-blob">
+                        <div class="node-top"><div class="icon azure">🗄️</div><div><div class="node-title">Azure Blob Storage</div><div class="node-sub">Block Blob</div></div></div>
+                        <div class="node-detail">File stored<br>201 + URL returned</div>
+                    </div>
+                </div>
+
+                <svg class="arrows-svg" id="svg" xmlns="http://www.w3.org/2000/svg"></svg>
+            </div>
+            
+            <div class="steps">
+                <div class="step"><div class="step-connector"></div><div class="step-num">1</div><div class="step-label">SAP sends POST request</div></div>
+                <div class="step"><div class="step-connector"></div><div class="step-num">2</div><div class="step-label">Express receives & validates</div></div>
+                <div class="step"><div class="step-connector"></div><div class="step-num">3</div><div class="step-label">Multer parses form-data</div></div>
+                <div class="step"><div class="step-connector"></div><div class="step-num">4</div><div class="step-label">Vault returns credentials</div></div>
+                <div class="step"><div class="step-connector"></div><div class="step-num">5</div><div class="step-label">SDK streams to Azure</div></div>
+                <div class="step"><div class="step-num">6</div><div class="step-label">201 + Blob URL returned</div></div>
+            </div>
+
+            <div class="footer">multipart/form-data · memoryStorage buffer · cross-cloud stream · mTLS</div>
+        </div>
+
+    </div>
+
+    <script src="diagram.js"></script>
+</body>
+</html>

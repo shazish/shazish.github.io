@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erratic Drummer - Android App</title>
+    
+    <link rel="stylesheet" href="styles.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: { colors: { navy: '#0f172a', lightNavy: '#1e293b', tealAccent: '#5eead4' } }
+            }
+        }
+    </script>
+</head>
+<body class="bg-navy text-slate-400 font-sans antialiased selection:bg-tealAccent selection:text-teal-900">
+
+    <div class="mx-auto min-h-screen max-w-screen-xl px-6 py-12 md:px-12 md:py-20 lg:px-24">
+        
+        <a href="index.html" class="group inline-flex items-center font-medium leading-tight text-tealAccent hover:text-teal-300 mb-10 transition-colors">
+            <span class="mr-2 transition-transform group-hover:-translate-x-1 motion-reduce:transition-none">&larr;</span> Back to Portfolio
+        </a>
+
+        <div class="mb-12">
+            <header class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">Personal Project</header>
+            <h1 class="text-3xl font-bold tracking-tight text-slate-200 sm:text-4xl mb-6">Erratic Drummer</h1>
+            
+            <div class="flex flex-wrap gap-4 mb-8">
+                <a href="https://play.google.com/store/apps/details?id=my.proj&hl=en&gl=US&pli=1" target="_blank" class="inline-flex items-center justify-center rounded-lg bg-tealAccent px-4 py-2 text-sm font-semibold text-navy transition-colors hover:bg-teal-300">
+                    <svg class="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.636 1.87A1.5 1.5 0 003 3.204v17.592a1.5 1.5 0 001.636 1.334l15.116-7.39a1.5 1.5 0 000-2.668L4.636 1.87z"></path></svg>
+                    View on Play Store
+                </a>
+                <a href="https://github.com/shazish/erratic-drummer" target="_blank" class="inline-flex items-center justify-center rounded-lg border border-slate-600 bg-transparent px-4 py-2 text-sm font-semibold text-slate-300 transition-colors hover:bg-slate-800 hover:text-white">
+                    <svg class="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
+                    GitHub Source
+                </a>
+            </div>
+
+            <p class="max-w-3xl text-base leading-relaxed text-slate-300">
+                A native Android application engineered to generate dynamic, erratic drum beats. Developed entirely from scratch, this project served as a deep dive into Android mobile development, handling real-time audio generation, UI/UX design, and the complete Google Play Store publication lifecycle.
+            </p>
+        </div>
+
+        <div class="mb-12">
+            <h2 class="text-xl font-bold text-white mb-4">Live Demo</h2>
+            <div class="relative w-full max-w-3xl aspect-video rounded-xl overflow-hidden border border-slate-700/50 shadow-lg bg-lightNavy">
+                <a href="https://www.youtube.com/watch?v=kvFmmSr8BVI" target="_blank" class="absolute top-0 left-0 w-full h-full group/video">
+                    <img src="https://img.youtube.com/vi/kvFmmSr8BVI/maxresdefault.jpg" alt="Video Demo" class="w-full h-full object-cover opacity-80 group-hover/video:opacity-100 transition-opacity">
+                    
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="bg-navy/80 rounded-full p-4 border border-slate-600 group-hover/video:bg-tealAccent group-hover/video:text-navy transition-colors text-slate-200 shadow-xl">
+                            <svg class="w-10 h-10 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                    </div>
+                </a>
+                <!-- <iframe 
+                    class="absolute top-0 left-0 w-full h-full"
+                    src="https://www.youtube.com/embed/kvFmmSr8BVI" 
+                    title="Erratic Drummer Demo" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe> -->
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <div class="bg-lightNavy border border-slate-700/50 rounded-xl p-6 shadow-lg">
+                <h2 class="text-xl font-bold text-white mb-4">Core Functionality</h2>
+                <ul class="space-y-4 text-sm text-slate-400">
+                    <li class="flex items-start">
+                        <span class="text-tealAccent mr-3">▹</span>
+                        <span><strong>Audio Engine:</strong> Engineered reliable playback systems for generating erratic, randomized drum patterns.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-tealAccent mr-3">▹</span>
+                        <span><strong>User Interface:</strong> Designed an intuitive, touch-friendly interface allowing users to control parameters and interact with the beat generator seamlessly.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-tealAccent mr-3">▹</span>
+                        <span><strong>State Management:</strong> Handled complex application states to ensure uninterrupted audio playback during backgrounding or screen rotations.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bg-lightNavy border border-slate-700/50 rounded-xl p-6 shadow-lg">
+                <h2 class="text-xl font-bold text-white mb-4">Technical Stack & Deployment</h2>
+                <ul class="space-y-4 text-sm text-slate-400">
+                    <li class="flex items-start">
+                        <span class="text-tealAccent mr-3">▹</span>
+                        <span><strong>Android SDK:</strong> Built using native Android development tools and libraries for optimal performance.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-tealAccent mr-3">▹</span>
+                        <span><strong>Version Control:</strong> Maintained clean, documented source code on GitHub.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-tealAccent mr-3">▹</span>
+                        <span><strong>Play Console:</strong> Navigated the Google Play Console for app signing, asset generation, policy compliance, and production rollout.</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+</html>
