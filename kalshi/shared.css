@@ -82,8 +82,8 @@ h3 {
 
 /* ── Code blocks ─────────────────────────────────────────────────────── */
 pre {
-  background: #111827;
-  border: 1px solid #1e293b;
+  background: #3e4400;
+  border: 1px solid #2f3300;
   border-radius: 8px;
   padding: 14px 16px;
   font-family: 'Cascadia Code', 'Consolas', monospace;
@@ -108,10 +108,10 @@ pre .c { color: #475569; font-style: italic; }
   line-height: 1.6;
   color: #94a3b8;
 }
-.callout.purple { border-color: #7c3aed; background: #1c123040; }
-.callout.teal   { border-color: #0d9488; background: #021a1a40; }
-.callout.amber  { border-color: #b45309; background: #1a0c0040; }
-.callout.blue   { border-color: #1d4ed8; background: #0c234040; }
+.callout.purple { border-color: #7c3aed; background: rgba(124,58,237,0.12); }
+.callout.teal   { border-color: #0d9488; background: rgba(13,148,136,0.12); }
+.callout.amber  { border-color: #b45309; background: rgba(180,83,9,0.12); }
+.callout.blue   { border-color: #1d4ed8; background: rgba(29,78,216,0.12); }
 .callout strong { color: #e2e8f0; }
 .callout code {
   font-family: 'Cascadia Code', 'Consolas', monospace;

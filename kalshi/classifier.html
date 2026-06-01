@@ -14,13 +14,13 @@
   }
   .mode-card {
     border-radius: 8px;
-    border: 1px solid #334155;
-    background: #111827;
+    border: 1px solid #4a5000;
+    background: #5e6503;
     padding: 16px 18px;
   }
   .mode-card.anomaly {
     border-color: #b45309;
-    background: #1a1208;
+    background: rgba(180,83,9,0.20);
   }
   .mode-card-title {
     font-size: 12px;
@@ -42,13 +42,13 @@
     position: relative;
     line-height: 1.5;
   }
-  .mode-card li::before { content: '›'; position: absolute; left: 0; color: #475569; }
+  .mode-card li::before { content: '›'; position: absolute; left: 0; color: #94a3b8; }
   .mode-card li strong { color: #e2e8f0; }
 
   /* ── Search requirement box ── */
   .search-box {
     border: 1px solid #0d9488;
-    background: #021a1a;
+    background: rgba(13,148,136,0.20);
     border-radius: 8px;
     padding: 14px 18px;
     margin-bottom: 24px;
@@ -75,7 +75,7 @@
     font-size: 10px;
     font-weight: 700;
     color: #0d9488;
-    background: #021a1a;
+    background: rgba(13,148,136,0.20);
     border: 1px solid #0d9488;
     border-radius: 3px;
     padding: 1px 5px;
@@ -96,22 +96,22 @@
   .schema-table th {
     text-align: left;
     padding: 8px 10px;
-    background: #111827;
-    border: 1px solid #1e293b;
+    background: #5e6503;
+    border: 1px solid #4a5000;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.5px;
-    color: #64748b;
+    color: #a0aec0;
     text-transform: uppercase;
   }
   .schema-table td {
     padding: 7px 10px;
-    border: 1px solid #1e293b;
+    border: 1px solid #4a5000;
     color: #94a3b8;
     vertical-align: top;
     line-height: 1.5;
   }
-  .schema-table tr:nth-child(even) td { background: #0b0f18; }
+  .schema-table tr:nth-child(even) td { background: #494f02; }
   .schema-table td:first-child {
     font-family: 'Cascadia Code', 'Consolas', monospace;
     color: #fde68a;
@@ -128,7 +128,7 @@
   .schema-table td code {
     font-family: 'Cascadia Code', 'Consolas', monospace;
     font-size: 10px;
-    background: #1e293b;
+    background: #3e4400;
     padding: 1px 4px;
     border-radius: 3px;
     color: #fde68a;
@@ -143,7 +143,7 @@
     vertical-align: middle;
   }
   .req-certain { background: #7c3aed; color: #ddd6fe; }
-  .req-all     { background: #334155; color: #e2e8f0; }
+  .req-all     { background: #4a5000; color: #e2e8f0; }
 
   /* ── Validation rules ── */
   .validation-grid {
@@ -159,9 +159,9 @@
     font-size: 11px;
     line-height: 1.5;
   }
-  .val-certain  { background: #1c1230; border-color: #7c3aed; }
-  .val-any      { background: #111827; border-color: #334155; }
-  .val-auto     { background: #1a0800; border-color: #b45309; }
+  .val-certain  { background: rgba(124,58,237,0.20); border-color: #7c3aed; }
+  .val-any      { background: #5e6503; border-color: #4a5000; }
+  .val-auto     { background: rgba(180,83,9,0.20); border-color: #b45309; }
   .val-card-title {
     font-weight: 700;
     font-size: 10px;
@@ -173,11 +173,11 @@
   .val-auto    .val-card-title { color: #fcd34d; }
   .val-card ul { list-style: none; padding: 0; }
   .val-card li { color: #94a3b8; padding: 2px 0 2px 12px; position: relative; }
-  .val-card li::before { content: '✓'; position: absolute; left: 0; color: #475569; font-size: 9px; top: 3px; }
+  .val-card li::before { content: '✓'; position: absolute; left: 0; color: #94a3b8; font-size: 9px; top: 3px; }
   .val-card li code {
     font-family: 'Cascadia Code', 'Consolas', monospace;
     font-size: 10px;
-    background: #1e293b;
+    background: #3e4400;
     padding: 1px 4px;
     border-radius: 3px;
     color: #fde68a;
@@ -194,17 +194,17 @@
   .ttr-table th {
     text-align: left;
     padding: 8px 12px;
-    background: #111827;
-    border: 1px solid #1e293b;
+    background: #5e6503;
+    border: 1px solid #4a5000;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.5px;
-    color: #64748b;
+    color: #a0aec0;
     text-transform: uppercase;
   }
   .ttr-table td {
     padding: 8px 12px;
-    border: 1px solid #1e293b;
+    border: 1px solid #4a5000;
     color: #94a3b8;
     vertical-align: top;
     line-height: 1.5;
@@ -218,11 +218,11 @@
     text-align: center;
     font-size: 16px;
   }
-  .ttr-table tr.t-easy td { background: #0c2340; }
-  .ttr-table tr.t-std  td { background: #111827; }
-  .ttr-table tr.t-hard td { background: #1a0f00; }
-  .ttr-table tr.t-vhard td { background: #1a0800; }
-  .ttr-table tr.t-never td { background: #140009; }
+  .ttr-table tr.t-easy td { background: rgba(29,78,216,0.20); }
+  .ttr-table tr.t-std  td { background: #5e6503; }
+  .ttr-table tr.t-hard td { background: rgba(180,83,9,0.20); }
+  .ttr-table tr.t-vhard td { background: rgba(180,83,9,0.20); }
+  .ttr-table tr.t-never td { background: rgba(124,58,237,0.20); }
 
   .cat-grid {
     display: grid;
@@ -232,8 +232,8 @@
   }
   .cat-card {
     border-radius: 7px;
-    border: 1px solid #1e293b;
-    background: #111827;
+    border: 1px solid #4a5000;
+    background: #5e6503;
     padding: 13px 15px;
   }
   .cat-card-title {
@@ -250,7 +250,7 @@
     position: relative;
     line-height: 1.5;
   }
-  .cat-card li::before { content: '›'; position: absolute; left: 0; color: #475569; }
+  .cat-card li::before { content: '›'; position: absolute; left: 0; color: #94a3b8; }
   .cat-card li strong { color: #e2e8f0; }
 
   /* ── Flow diagram for prompt sequence ── */
@@ -258,7 +258,7 @@
     display: flex;
     flex-direction: column;
     gap: 0;
-    border: 1px solid #1e293b;
+    border: 1px solid #4a5000;
     border-radius: 8px;
     overflow: hidden;
     margin-bottom: 24px;
@@ -268,7 +268,7 @@
     align-items: flex-start;
     gap: 14px;
     padding: 10px 16px;
-    border-top: 1px solid #1e293b;
+    border-top: 1px solid #4a5000;
     font-size: 11px;
     color: #94a3b8;
     line-height: 1.5;
@@ -286,20 +286,20 @@
     flex-shrink: 0;
     margin-top: 1px;
   }
-  .pf-num.search { background: #0c2340; color: #60a5fa; border: 1px solid #1d4ed8; }
-  .pf-num.think  { background: #1c1230; color: #c4b5fd; border: 1px solid #7c3aed; }
-  .pf-num.output { background: #1a0c00; color: #fcd34d; border: 1px solid #b45309; }
+  .pf-num.search { background: rgba(29,78,216,0.20); color: #60a5fa; border: 1px solid #1d4ed8; }
+  .pf-num.think  { background: rgba(124,58,237,0.20); color: #c4b5fd; border: 1px solid #7c3aed; }
+  .pf-num.output { background: rgba(180,83,9,0.20); color: #fcd34d; border: 1px solid #b45309; }
   .pf-step strong { color: #e2e8f0; }
   .pf-step code {
     font-family: 'Cascadia Code', 'Consolas', monospace;
     font-size: 10px;
-    background: #1e293b;
+    background: #3e4400;
     padding: 1px 4px;
     border-radius: 3px;
     color: #fde68a;
   }
-  .pf-step.mandatory { background: #021a1a; }
-  .pf-step.mandatory .pf-num.search { background: #021a1a; border-color: #0d9488; color: #5eead4; }
+  .pf-step.mandatory { background: rgba(13,148,136,0.20); }
+  .pf-step.mandatory .pf-num.search { background: rgba(13,148,136,0.20); border-color: #0d9488; color: #5eead4; }
 
 </style>
 </head>
@@ -357,7 +357,7 @@
 <!-- ══════════════════════════════════════════════════════ SEARCH REQUIREMENTS -->
 <div class="section">
   <h2>Mandatory Search Sequence</h2>
-  <p style="font-size:11px;color:#64748b;margin-bottom:14px">
+  <p style="font-size:11px;color:#a0aec0;margin-bottom:14px">
     Minimum 3 searches required. The recency search is hardcoded mandatory — skipping it causes automatic downgrade to LIKELY.
   </p>
 
@@ -385,7 +385,7 @@
     </div>
   </div>
 
-  <div class="search-box" style="border-color:#b45309;background:#1a0c00;">
+  <div class="search-box" style="border-color:#b45309;background:rgba(180,83,9,0.20);">
     <div class="search-box-title" style="color:#fcd34d">Anomaly classifier search sequence</div>
     <div class="search-req">
       <span class="search-num" style="border-color:#b45309;color:#fcd34d">A</span>
@@ -405,9 +405,9 @@
 <!-- ══════════════════════════════════════════════════════ OUTPUT SCHEMA -->
 <div class="section">
   <h2>Output Schema — All Fields</h2>
-  <p style="font-size:11px;color:#64748b;margin-bottom:14px">
+  <p style="font-size:11px;color:#a0aec0;margin-bottom:14px">
     The agent must output exactly this JSON structure. No additional fields, no markdown wrapping.
-    <code style="background:#1e293b;padding:2px 6px;border-radius:3px;color:#fde68a;font-size:10px">validate_classification()</code>
+    <code style="background:#3e4400;padding:2px 6px;border-radius:3px;color:#fde68a;font-size:10px">validate_classification()</code>
     enforces the rules post-output.
   </p>
 
@@ -552,7 +552,7 @@
 <!-- ══════════════════════════════════════════════════════ VALIDATION RULES -->
 <div class="section">
   <h2>Validation Rules — <code style="font-size:12px;color:#fde68a">validate_classification()</code></h2>
-  <p style="font-size:11px;color:#64748b;margin-bottom:14px">
+  <p style="font-size:11px;color:#a0aec0;margin-bottom:14px">
     Applied in <code>kalshi_cron.py finalize</code> before the opportunity manager processes results.
     Violations auto-downgrade to LIKELY and are recorded in <code>_validation_errors</code>.
   </p>
@@ -602,7 +602,7 @@
 <!-- ══════════════════════════════════════════════════════ TTR -->
 <div class="section ttr-section" id="ttr">
   <h2>Time-to-Resolution Factor <span class="badge badge-new">new</span></h2>
-  <p style="font-size:11px;color:#64748b;margin-bottom:14px">
+  <p style="font-size:11px;color:#a0aec0;margin-bottom:14px">
     The <code>DAYS TO CLOSE</code> field from the candidate prompt is used to calibrate how strictly CERTAIN is applied.
     Near-term markets have limited surface area for surprises; far-horizon markets carry compounding black-swan risk.
     This is a soft constraint — it guides the agent's reasoning but is not enforced by <code>validate_classification()</code>.
@@ -705,7 +705,7 @@
 <!-- ══════════════════════════════════════════════════════ CLUSTER CONTEXT -->
 <div class="section">
   <h2>Cluster Context — Market Grouping Input</h2>
-  <p style="font-size:11px;color:#64748b;margin-bottom:14px">
+  <p style="font-size:11px;color:#a0aec0;margin-bottom:14px">
     Each candidate prompt may include a CLUSTER CONTEXT block listing sibling markets from the same event.
     This is appended automatically by <code>market_clusterer.py</code> before the classifier receives the candidate.
   </p>
@@ -734,7 +734,7 @@ Note: classify this market on its own merits.
 Sibling markets share the same underlying event — ensure your conclusion is consistent with them.</pre>
 </div>
 
-<p style="margin-top:20px;font-size:10px;color:#334155;">
+<p style="margin-top:20px;font-size:10px;color:#4a5000;">
   classifier.py · market_clusterer.py · kalshi_cron.py · Updated May 2026
 </p>
 

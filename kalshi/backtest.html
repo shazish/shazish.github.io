@@ -25,14 +25,14 @@
     line-height: 1.5;
     width: 100%;
     border: 1px solid #0d9488;
-    background: #021a1a;
+    background: rgba(13,148,136,0.20);
     color: #94a3b8;
   }
   .flow-card strong { color: #e2e8f0; font-size: 11px; }
   .flow-card code {
     font-family: 'Cascadia Code', 'Consolas', monospace;
     font-size: 10px;
-    background: #1e293b;
+    background: #3e4400;
     padding: 1px 4px;
     border-radius: 3px;
     color: #fde68a;
@@ -42,7 +42,7 @@
     align-items: center;
     padding: 0 8px;
     padding-top: 18px;
-    color: #475569;
+    color: #94a3b8;
     font-size: 14px;
     flex-shrink: 0;
   }
@@ -57,27 +57,27 @@
   .seg-table th {
     text-align: left;
     padding: 8px 12px;
-    background: #111827;
-    border: 1px solid #1e293b;
+    background: #5e6503;
+    border: 1px solid #4a5000;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.5px;
-    color: #64748b;
+    color: #a0aec0;
     text-transform: uppercase;
   }
   .seg-table td {
     padding: 8px 12px;
-    border: 1px solid #1e293b;
+    border: 1px solid #4a5000;
     color: #94a3b8;
     vertical-align: top;
     line-height: 1.5;
   }
-  .seg-table tr:nth-child(even) td { background: #0b0f18; }
+  .seg-table tr:nth-child(even) td { background: #494f02; }
   .seg-table td:first-child { font-weight: 700; color: #e2e8f0; white-space: nowrap; }
   .seg-table td code {
     font-family: 'Cascadia Code', 'Consolas', monospace;
     font-size: 10px;
-    background: #1e293b;
+    background: #3e4400;
     padding: 1px 4px;
     border-radius: 3px;
     color: #fde68a;
@@ -93,26 +93,26 @@
   .precision-table th {
     text-align: left;
     padding: 8px 12px;
-    background: #111827;
-    border: 1px solid #1e293b;
+    background: #5e6503;
+    border: 1px solid #4a5000;
     font-size: 10px;
     font-weight: 700;
-    color: #64748b;
+    color: #a0aec0;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
   .precision-table td {
     padding: 8px 12px;
-    border: 1px solid #1e293b;
+    border: 1px solid #4a5000;
     color: #94a3b8;
     line-height: 1.5;
     vertical-align: top;
   }
   .precision-table td:first-child { font-weight: 700; color: #e2e8f0; white-space: nowrap; }
-  .precision-table tr.good  td { background: #0a1f0a; }
-  .precision-table tr.warn  td { background: #1a1208; }
-  .precision-table tr.bad   td { background: #1a0600; }
-  .precision-table tr.wait  td { background: #0b0f18; }
+  .precision-table tr.good  td { background: rgba(21,128,61,0.20); }
+  .precision-table tr.warn  td { background: rgba(180,83,9,0.20); }
+  .precision-table tr.bad   td { background: rgba(180,83,9,0.20); }
+  .precision-table tr.wait  td { background: #5e6503; }
 
   /* ── Files card ── */
   .files-grid {
@@ -123,8 +123,8 @@
   }
   .file-card {
     border-radius: 7px;
-    border: 1px solid #1e293b;
-    background: #111827;
+    border: 1px solid #4a5000;
+    background: #5e6503;
     padding: 12px 14px;
     font-size: 11px;
     color: #94a3b8;
@@ -143,12 +143,12 @@
     position: relative;
     font-size: 10px;
   }
-  .file-card li::before { content: '›'; position: absolute; left: 0; color: #475569; }
+  .file-card li::before { content: '›'; position: absolute; left: 0; color: #94a3b8; }
   .file-card strong { color: #e2e8f0; }
 
   /* ── Timeline ── */
   .timeline {
-    border-left: 2px solid #1e293b;
+    border-left: 2px solid #4a5000;
     padding-left: 20px;
     margin-left: 10px;
     margin-bottom: 24px;
@@ -166,19 +166,19 @@
     height: 10px;
     border-radius: 50%;
     background: #0d9488;
-    border: 2px solid #0f1117;
+    border: 2px solid #494f02;
     position: absolute;
     left: -25px;
     top: 3px;
   }
-  .tl-dot.pending { background: #334155; }
-  .tl-dot.future  { background: #1e293b; border-color: #334155; }
+  .tl-dot.pending { background: #4a5000; }
+  .tl-dot.future  { background: #4a5000; border-color: #4a5000; }
   .tl-date { font-weight: 700; color: #e2e8f0; margin-bottom: 3px; }
   .tl-item strong { color: #e2e8f0; }
 
   /* ── Sample output block ── */
   .sample-output {
-    background: #021a1a;
+    background: rgba(13,148,136,0.20);
     border: 1px solid #0d9488;
     border-radius: 8px;
     padding: 14px 16px;
@@ -194,7 +194,7 @@
   .so-ok     { color: #4ade80; }
   .so-warn   { color: #fb923c; }
   .so-label  { color: #e2e8f0; }
-  .so-dim    { color: #475569; }
+  .so-dim    { color: #94a3b8; }
 </style>
 </head>
 <body>
@@ -209,14 +209,14 @@
 <p class="subtitle">
   Measures classifier accuracy against actual market resolutions ·
   target ≥ 95% precision on CERTAIN ·
-  run manually via <code style="background:#1e293b;padding:2px 6px;border-radius:3px;color:#fde68a;font-size:11px">python3 kalshi_cron.py backtest</code>
+  run manually via <code style="background:#3e4400;padding:2px 6px;border-radius:3px;color:#fde68a;font-size:11px">python3 kalshi_cron.py backtest</code>
 </p>
 
 <!-- ══════════════════════════════════════════════════════ OVERVIEW -->
 <div class="section">
   <h2>What It Measures</h2>
   <p style="font-size:11px;color:#94a3b8;line-height:1.6;max-width:860px;margin-bottom:16px">
-    The backtest reads every opportunity logged to <code style="background:#1e293b;padding:1px 4px;border-radius:3px;color:#fde68a;font-size:10px">logs/opportunities.jsonl</code>
+    The backtest reads every opportunity logged to <code style="background:#3e4400;padding:1px 4px;border-radius:3px;color:#fde68a;font-size:10px">logs/opportunities.jsonl</code>
     since the pipeline began, queries the Kalshi API for each market's resolution status,
     and computes what fraction of <strong>CERTAIN</strong>-classified predictions were correct.
     The target is ≥ 95% precision. Falling below this threshold indicates the classifier is being
@@ -237,7 +237,7 @@
         <strong>1. Load log</strong><br>
         Read <code>logs/opportunities.jsonl</code><br>
         Each line = one classified market (candidate + classification)<br>
-        <span style="color:#64748b;font-size:10px">178 entries as of May 2026</span>
+        <span style="color:#a0aec0;font-size:10px">178 entries as of May 2026</span>
       </div>
     </div>
     <div class="flow-arrow">→</div>
@@ -246,7 +246,7 @@
         <strong>2. Check resolutions</strong><br>
         Query <code>GET /markets/{"{ticker}"}</code> for each pending market<br>
         Skip if already settled (cached)<br>
-        <span style="color:#64748b;font-size:10px">150ms throttle between requests</span>
+        <span style="color:#a0aec0;font-size:10px">150ms throttle between requests</span>
       </div>
     </div>
     <div class="flow-arrow">→</div>
@@ -255,7 +255,7 @@
         <strong>3. Score</strong><br>
         Compare <code>predicted_side</code> vs <code>result</code><br>
         Separate CERTAIN and LIKELY pools<br>
-        <span style="color:#64748b;font-size:10px">Only YES/NO results count</span>
+        <span style="color:#a0aec0;font-size:10px">Only YES/NO results count</span>
       </div>
     </div>
     <div class="flow-arrow">→</div>
@@ -264,7 +264,7 @@
         <strong>4. Segment &amp; report</strong><br>
         Break down by category, horizon tier, confidence band<br>
         Save JSON + print terminal report<br>
-        <span style="color:#64748b;font-size:10px">Output: <code>backtests/backtest_YYYYMMDD.json</code></span>
+        <span style="color:#a0aec0;font-size:10px">Output: <code>backtests/backtest_YYYYMMDD.json</code></span>
       </div>
     </div>
   </div>
@@ -275,9 +275,9 @@
   <h2>Resolution Checking</h2>
 
   <p style="font-size:11px;color:#94a3b8;line-height:1.6;max-width:860px;margin-bottom:16px">
-    Each entry in <code style="background:#1e293b;padding:1px 4px;border-radius:3px;color:#fde68a;font-size:10px">opportunities.jsonl</code>
-    has a <code style="background:#1e293b;padding:1px 4px;border-radius:3px;color:#fde68a;font-size:10px">candidate.ticker</code>.
-    The backtest calls <code style="background:#1e293b;padding:1px 4px;border-radius:3px;color:#fde68a;font-size:10px">KalshiClient.get_market(ticker)</code>
+    Each entry in <code style="background:#3e4400;padding:1px 4px;border-radius:3px;color:#fde68a;font-size:10px">opportunities.jsonl</code>
+    has a <code style="background:#3e4400;padding:1px 4px;border-radius:3px;color:#fde68a;font-size:10px">candidate.ticker</code>.
+    The backtest calls <code style="background:#3e4400;padding:1px 4px;border-radius:3px;color:#fde68a;font-size:10px">KalshiClient.get_market(ticker)</code>
     and checks the <code>status</code> and <code>result</code> fields.
   </p>
 
@@ -577,7 +577,7 @@ python3 backtest.py</pre>
   </div>
 </div>
 
-<p style="margin-top:20px;font-size:10px;color:#334155;">
+<p style="margin-top:20px;font-size:10px;color:#4a5000;">
   backtest.py · kalshi_client.py · logs/opportunities.jsonl · backtests/ · Updated May 2026
 </p>
 

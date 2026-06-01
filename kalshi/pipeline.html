@@ -21,13 +21,13 @@
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: #475569;
+    color: #94a3b8;
   }
 
   .layer-body {
     flex: 1;
     padding: 14px 0;
-    border-left: 2px solid #1e293b;
+    border-left: 2px solid #4a5000;
     padding-left: 20px;
     position: relative;
   }
@@ -37,7 +37,7 @@
   .arrow-line {
     flex: 1;
     padding-left: 20px;
-    border-left: 2px solid #1e293b;
+    border-left: 2px solid #4a5000;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -45,7 +45,7 @@
     padding-bottom: 4px;
   }
   .arrow-line svg { flex-shrink: 0; }
-  .arrow-label { font-size: 10px; color: #475569; font-style: italic; }
+  .arrow-label { font-size: 10px; color: #94a3b8; font-style: italic; }
 
   /* ── Cards ── */
   .cards { display: flex; flex-wrap: wrap; gap: 10px; }
@@ -58,12 +58,12 @@
     border: 1px solid transparent;
   }
 
-  .kalshi     { background: #0c2340; border-color: #1d4ed8; }
-  .polymarket { background: #0f2b1a; border-color: #15803d; }
-  .shared     { background: #1c1230; border-color: #7c3aed; }
-  .output     { background: #1a1208; border-color: #b45309; }
-  .file       { background: #111827; border-color: #374151; }
-  .teal       { background: #021a1a; border-color: #0d9488; }
+  .kalshi     { background: rgba(29,78,216,0.20); border-color: #1d4ed8; }
+  .polymarket { background: rgba(21,128,61,0.20); border-color: #15803d; }
+  .shared     { background: rgba(124,58,237,0.20); border-color: #7c3aed; }
+  .output     { background: rgba(180,83,9,0.20); border-color: #b45309; }
+  .file       { background: #5e6503; border-color: #4a5000; }
+  .teal       { background: rgba(13,148,136,0.20); border-color: #0d9488; }
 
   .card-title {
     font-weight: 700;
@@ -77,7 +77,7 @@
 
   .detail { color: #94a3b8; font-size: 11px; margin-top: 2px; }
   .detail li { list-style: none; padding-left: 10px; position: relative; }
-  .detail li::before { content: '›'; position: absolute; left: 0; color: #475569; }
+  .detail li::before { content: '›'; position: absolute; left: 0; color: #94a3b8; }
 
   .merge-label {
     font-size: 10px;
@@ -87,7 +87,7 @@
     padding: 2px 8px;
     border: 1px solid #4c1d95;
     border-radius: 4px;
-    background: #1c1230;
+    background: rgba(124,58,237,0.20);
     white-space: nowrap;
   }
 
@@ -102,12 +102,12 @@
     font-size: 10px;
     padding: 2px 8px;
     border-radius: 3px;
-    background: #1e293b;
-    border: 1px solid #334155;
+    background: #3e4400;
+    border: 1px solid #4a5000;
     color: #cbd5e1;
     white-space: nowrap;
   }
-  .filter-arrow { color: #475569; font-size: 11px; }
+  .filter-arrow { color: #94a3b8; font-size: 11px; }
 
   .output-cols {
     display: grid;
@@ -120,33 +120,33 @@
     font-size: 10px;
     color: #94a3b8;
     padding: 2px 0 2px 10px;
-    border-left: 2px solid #374151;
+    border-left: 2px solid #4a5000;
     margin-top: 3px;
   }
   .sheet.green  { border-color: #22c55e; color: #86efac; }
   .sheet.grey   { border-color: #6b7280; color: #d1d5db; }
   .sheet.yellow { border-color: #eab308; color: #fde68a; }
 
-  hr.layer-sep { border: none; border-top: 1px dashed #1e293b; margin: 2px 0 2px 130px; }
+  hr.layer-sep { border: none; border-top: 1px dashed #4a5000; margin: 2px 0 2px 130px; }
 
   /* ── Section separator for independent workflows ── */
   .section-sep {
     margin: 48px 0 32px;
     border: none;
-    border-top: 1px solid #1e293b;
+    border-top: 1px solid #4a5000;
     position: relative;
   }
   .section-sep-label {
     position: absolute;
     top: -9px;
     left: 130px;
-    background: #0f1117;
+    background: #494f02;
     padding: 0 10px;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: #475569;
+    color: #94a3b8;
   }
 
   /* ── Backtest flow ── */
@@ -169,7 +169,7 @@
     line-height: 1.5;
     width: 100%;
     border: 1px solid #0d9488;
-    background: #021a1a;
+    background: rgba(13,148,136,0.20);
     color: #94a3b8;
   }
   .bt-card strong { color: #e2e8f0; font-size: 11px; }
@@ -178,28 +178,28 @@
     align-items: center;
     padding: 0 8px;
     padding-top: 18px;
-    color: #475569;
+    color: #94a3b8;
     font-size: 14px;
   }
 
   /* ── Tier table ── */
   .tier-table { width: 100%; border-collapse: collapse; margin-top: 6px; font-size: 10px; }
-  .tier-table td { padding: 2px 6px; border: 1px solid #1e293b; color: #94a3b8; }
+  .tier-table td { padding: 2px 6px; border: 1px solid #4a5000; color: #94a3b8; }
   .tier-table td:first-child { color: #e2e8f0; font-weight: 600; white-space: nowrap; }
-  .tier-table tr.t-easy td { background: #0c2340; }
-  .tier-table tr.t-std  td { background: #111827; }
-  .tier-table tr.t-hard td { background: #1a0c00; }
+  .tier-table tr.t-easy td { background: rgba(29,78,216,0.20); }
+  .tier-table tr.t-std  td { background: #5e6503; }
+  .tier-table tr.t-hard td { background: rgba(180,83,9,0.20); }
 
   /* ── Glossary ── */
-  .glossary { margin-top: 48px; border: 1px solid #1e293b; border-radius: 8px; overflow: hidden; }
+  .glossary { margin-top: 48px; border: 1px solid #4a5000; border-radius: 8px; overflow: hidden; }
   .glossary summary {
     padding: 12px 18px;
-    background: #111827;
+    background: #5e6503;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.8px;
     text-transform: uppercase;
-    color: #64748b;
+    color: #a0aec0;
     cursor: pointer;
     user-select: none;
     list-style: none;
@@ -217,13 +217,13 @@
     gap: 0;
     padding: 0;
   }
-  .gterm { padding: 12px 18px; border-top: 1px solid #1e293b; font-size: 11px; }
+  .gterm { padding: 12px 18px; border-top: 1px solid #4a5000; font-size: 11px; }
   .gterm dt { font-weight: 700; color: #e2e8f0; font-size: 11px; margin-bottom: 3px; }
   .gterm dd { color: #94a3b8; line-height: 1.6; }
   .gterm dd code {
     font-family: 'Cascadia Code', 'Consolas', monospace;
     font-size: 10px;
-    background: #1e293b;
+    background: #3e4400;
     padding: 1px 4px;
     border-radius: 3px;
     color: #fde68a;
@@ -255,7 +255,7 @@
 <p class="subtitle">
   Kalshi (USD) &amp; <span class="tip" data-tip="Polymarket settles bets in USDC — a US-dollar stablecoin on the Polygon blockchain. Winning means receiving USDC in a crypto wallet, not direct USD. A separate cash-out step through a crypto exchange is required.">Polymarket (USDC)</span>
   · Scanner → Clustering → Classifier → Opportunity Manager → Report
-  &nbsp;·&nbsp; <em style="color:#475569">hover dotted terms for definitions</em>
+  &nbsp;·&nbsp; <em style="color:#94a3b8">hover dotted terms for definitions</em>
 </p>
 
 <div class="pipeline">
@@ -307,7 +307,7 @@
   <div class="arrow-row">
     <div class="arrow-spacer"></div>
     <div class="arrow-line">
-      <svg width="12" height="20" viewBox="0 0 12 20"><path d="M6 0v16M1 11l5 7 5-7" stroke="#334155" stroke-width="1.5" fill="none"/></svg>
+      <svg width="12" height="20" viewBox="0 0 12 20"><path d="M6 0v16M1 11l5 7 5-7" stroke="#4a5000" stroke-width="1.5" fill="none"/></svg>
       <span class="arrow-label">python3 kalshi_cron.py &lt;mode&gt;</span>
     </div>
   </div>
@@ -381,7 +381,7 @@
   <div class="arrow-row">
     <div class="arrow-spacer"></div>
     <div class="arrow-line">
-      <svg width="12" height="20" viewBox="0 0 12 20"><path d="M6 0v16M1 11l5 7 5-7" stroke="#334155" stroke-width="1.5" fill="none"/></svg>
+      <svg width="12" height="20" viewBox="0 0 12 20"><path d="M6 0v16M1 11l5 7 5-7" stroke="#4a5000" stroke-width="1.5" fill="none"/></svg>
       <span class="arrow-label">candidates saved · candidate_type tagged · urgency_score computed</span>
     </div>
   </div>
@@ -414,7 +414,7 @@
   <div class="arrow-row">
     <div class="arrow-spacer"></div>
     <div class="arrow-line">
-      <svg width="12" height="20" viewBox="0 0 12 20"><path d="M6 0v16M1 11l5 7 5-7" stroke="#334155" stroke-width="1.5" fill="none"/></svg>
+      <svg width="12" height="20" viewBox="0 0 12 20"><path d="M6 0v16M1 11l5 7 5-7" stroke="#4a5000" stroke-width="1.5" fill="none"/></svg>
       <div class="merge-label">all platforms merge · clustering reduces token load before classification</div>
     </div>
   </div>
@@ -457,7 +457,7 @@
   <div class="arrow-row">
     <div class="arrow-spacer"></div>
     <div class="arrow-line">
-      <svg width="12" height="20" viewBox="0 0 12 20"><path d="M6 0v16M1 11l5 7 5-7" stroke="#334155" stroke-width="1.5" fill="none"/></svg>
+      <svg width="12" height="20" viewBox="0 0 12 20"><path d="M6 0v16M1 11l5 7 5-7" stroke="#4a5000" stroke-width="1.5" fill="none"/></svg>
       <span class="arrow-label">primaries printed with cluster context · agent classifies each · siblings skipped</span>
     </div>
   </div>
@@ -538,7 +538,7 @@
   <div class="arrow-row">
     <div class="arrow-spacer"></div>
     <div class="arrow-line">
-      <svg width="12" height="20" viewBox="0 0 12 20"><path d="M6 0v16M1 11l5 7 5-7" stroke="#334155" stroke-width="1.5" fill="none"/></svg>
+      <svg width="12" height="20" viewBox="0 0 12 20"><path d="M6 0v16M1 11l5 7 5-7" stroke="#4a5000" stroke-width="1.5" fill="none"/></svg>
       <span class="arrow-label">agent writes cache/classified.json · then runs: python3 kalshi_cron.py finalize</span>
     </div>
   </div>
@@ -582,7 +582,7 @@
   <div class="arrow-row">
     <div class="arrow-spacer"></div>
     <div class="arrow-line">
-      <svg width="12" height="20" viewBox="0 0 12 20"><path d="M6 0v16M1 11l5 7 5-7" stroke="#334155" stroke-width="1.5" fill="none"/></svg>
+      <svg width="12" height="20" viewBox="0 0 12 20"><path d="M6 0v16M1 11l5 7 5-7" stroke="#4a5000" stroke-width="1.5" fill="none"/></svg>
     </div>
   </div>
 
@@ -606,7 +606,7 @@
         </div>
 
         <div class="card output">
-          <div class="card-title">Excel Report <span style="color:#64748b;font-size:10px">excel_reporter.py</span></div>
+          <div class="card-title">Excel Report <span style="color:#a0aec0;font-size:10px">excel_reporter.py</span></div>
           <div class="sheet-list">
             <div class="sheet green"><strong>Opportunities</strong> — actionable (green) + <span class="tip" data-tip="CERTAIN-classified markets that were filtered out — validation errors, thin edge, or already notified. Shown in grey so the sheet is never misleadingly empty.">near-misses</span> (grey)</div>
             <div class="sheet" style="border-color:#7c3aed;color:#ddd6fe"><strong>All Results</strong> — every classified market with routing</div>
@@ -640,7 +640,7 @@
 <hr class="section-sep"><span class="section-sep-label">Independent Workflow</span>
 
 <h1 style="font-size:15px;margin-bottom:6px">Backtest — Retrospective Precision Scorer</h1>
-<p style="font-size:11px;color:#64748b;margin-bottom:20px">
+<p style="font-size:11px;color:#a0aec0;margin-bottom:20px">
   Runs independently of the scan pipeline. Reads historical classifications and scores them against actual market resolutions.
   &nbsp;→ <a href="backtest.html" style="color:#99f6e4;text-decoration:none">Full backtest documentation ↗</a>
 </p>
@@ -650,7 +650,7 @@
     <div class="bt-card">
       <strong>Load log</strong><br>
       Read logs/opportunities.jsonl<br>
-      <span style="color:#64748b;font-size:10px">178 entries as of May 2026</span>
+      <span style="color:#a0aec0;font-size:10px">178 entries as of May 2026</span>
     </div>
   </div>
   <div class="bt-arrow">→</div>
@@ -659,7 +659,7 @@
       <strong>Check resolutions</strong><br>
       Query Kalshi API for each ticker<br>
       status = settled/finalized?<br>
-      <span style="color:#64748b;font-size:10px">Cached in backtests/resolution_cache.json</span>
+      <span style="color:#a0aec0;font-size:10px">Cached in backtests/resolution_cache.json</span>
     </div>
   </div>
   <div class="bt-arrow">→</div>
@@ -668,7 +668,7 @@
       <strong>Score</strong><br>
       Compare predicted side vs actual result<br>
       CERTAIN precision · LIKELY precision<br>
-      <span style="color:#64748b;font-size:10px">Target: CERTAIN ≥ 95%</span>
+      <span style="color:#a0aec0;font-size:10px">Target: CERTAIN ≥ 95%</span>
     </div>
   </div>
   <div class="bt-arrow">→</div>
@@ -676,13 +676,13 @@
     <div class="bt-card">
       <strong>Segment &amp; report</strong><br>
       Break down by category, time horizon, confidence band<br>
-      <span style="color:#64748b;font-size:10px">Saved to backtests/backtest_YYYYMMDD.json</span>
+      <span style="color:#a0aec0;font-size:10px">Saved to backtests/backtest_YYYYMMDD.json</span>
     </div>
   </div>
 </div>
 
-<div style="margin-top:12px;font-size:11px;color:#64748b">
-  Run: <code style="background:#1e293b;padding:2px 6px;border-radius:3px;color:#fde68a;font-size:10px">python3 kalshi_cron.py backtest</code>
+<div style="margin-top:12px;font-size:11px;color:#a0aec0">
+  Run: <code style="background:#3e4400;padding:2px 6px;border-radius:3px;color:#fde68a;font-size:10px">python3 kalshi_cron.py backtest</code>
   &nbsp; First resolutions expected ~June 2026 when the IPO-by-June markets settle.
 </div>
 
@@ -829,7 +829,7 @@
   </dl>
 </details>
 
-<p style="margin-top:20px;font-size:10px;color:#334155;">
+<p style="margin-top:20px;font-size:10px;color:#4a5000;">
   Updated May 2026 · scanner.py · anomaly_scanner.py · polymarket_scanner.py · market_clusterer.py · classifier.py · opportunity_manager.py · excel_reporter.py · backtest.py
 </p>
 
