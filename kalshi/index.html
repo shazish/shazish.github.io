@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalshi Tracker — Project Overview</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  body { max-width: 980px; margin: 0 auto; min-width: 0; }
+
+  /* ── Back link ── */
+  .back {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; color: #94a3b8; text-decoration: none;
+    margin-bottom: 32px;
+    transition: color 0.12s;
+  }
+  .back:hover { color: #e2e8f0; }
+
+  /* ── Hero ── */
+  .hero { margin-bottom: 48px; }
+  .hero h1 { font-size: 26px; color: #f8fafc; margin-bottom: 10px; }
+  .hero .tagline { font-size: 14px; color: #a0aec0; margin-bottom: 20px; line-height: 1.6; max-width: 680px; }
+  .hero .badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+
+  /* ── Deck iframe ── */
+  .deck-wrapper {
+    border: 1px solid #1e293b;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 48px;
+    background: #0D1117;
+    position: relative;
+  }
+  .deck-wrapper iframe {
+    width: 100%;
+    aspect-ratio: 16/9;
+    display: block;
+    border: none;
+  }
+  .deck-label {
+    padding: 8px 14px;
+    font-size: 10px;
+    color: #475569;
+    background: #0a0d12;
+    border-top: 1px solid #1e293b;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .deck-label a {
+    color: #5eead4; font-size: 10px; text-decoration: none;
+    transition: color 0.12s;
+  }
+  .deck-label a:hover { color: #99f6e4; }
+
+  /* ── Pipeline steps ── */
+  .pipeline-steps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 48px;
+  }
+  .step {
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 14px 12px;
+    text-align: center;
+  }
+  .step .num {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.5px;
+    color: #475569; text-transform: uppercase; margin-bottom: 6px;
+  }
+  .step .name { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .step .desc { font-size: 10px; color: #64748b; line-height: 1.5; }
+  .step.scan   .name { color: #58C4DD; }
+  .step.research .name { color: #C792EA; }
+  .step.classify .name { color: #83C167; }
+  .step.verify .name { color: #FFD93D; }
+  .step.report .name { color: #FF6B6B; }
+
+  /* ── Doc cards ── */
+  .doc-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .doc-card {
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 10px;
+    padding: 20px;
+    text-decoration: none;
+    color: inherit;
+    display: flex; flex-direction: column; gap: 8px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .doc-card:hover { border-color: #334155; background: #161f2e; }
+  .doc-card .doc-icon { font-size: 22px; margin-bottom: 2px; }
+  .doc-card .doc-title { font-size: 13px; font-weight: 700; color: #e2e8f0; }
+  .doc-card .doc-desc  { font-size: 11px; color: #64748b; line-height: 1.55; flex: 1; }
+  .doc-card .doc-arrow { font-size: 10px; color: #334155; text-align: right; margin-top: 4px; }
+  .doc-card:hover .doc-arrow { color: #5eead4; }
+
+  /* ── Stats row ── */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+  .stat {
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 16px 14px;
+    text-align: center;
+  }
+  .stat .val { font-size: 22px; font-weight: 700; color: #5eead4; margin-bottom: 4px; }
+  .stat .lbl { font-size: 10px; color: #64748b; letter-spacing: 0.3px; }
+
+  /* ── Tech section ── */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .tech-block {
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 18px;
+  }
+  .tech-block h3 { margin-bottom: 10px; }
+  .tech-block ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .tech-block li {
+    font-size: 11px; color: #94a3b8; line-height: 1.5;
+    padding-left: 14px; position: relative;
+  }
+  .tech-block li::before { content: "›"; position: absolute; left: 0; color: #334155; }
+  .tech-block li strong { color: #e2e8f0; }
+
+  @media (max-width: 700px) {
+    .pipeline-steps { grid-template-columns: 1fr 1fr; }
+    .doc-cards      { grid-template-columns: 1fr; }
+    .stats          { grid-template-columns: 1fr 1fr; }
+    .tech-grid      { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<a href="../index.html" class="back">← shazish.github.io</a>
+
+<!-- ── Hero ────────────────────────────────────────────────────────────── -->
+<div class="hero">
+  <h1>Kalshi Tracker</h1>
+  <p class="tagline">
+    Autonomous pipeline that scans 10,000+ Kalshi and Polymarket prediction markets,
+    runs multi-agent web research on candidates, classifies near-certain outcomes with an LLM,
+    fact-checks every CERTAIN result, and outputs a Kelly-sized opportunity report.
+  </p>
+  <div class="badges">
+    <span class="badge badge-kalshi">Kalshi</span>
+    <span class="badge badge-poly">Polymarket</span>
+    <span class="badge badge-llm">LLM</span>
+    <span class="badge badge-quant">Kelly / Edge</span>
+    <span class="badge badge-file">Python</span>
+    <span class="badge badge-teal">Multi-agent</span>
+  </div>
+  <a href="https://github.com/shazish/kalshi-polymarket-tracker" target="_blank" rel="noreferrer"
+     style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#64748b;text-decoration:none;border:1px solid #1e293b;border-radius:6px;padding:5px 12px;transition:color 0.12s,border-color 0.12s;"
+     onmouseover="this.style.color='#5eead4';this.style.borderColor='#334155'"
+     onmouseout="this.style.color='#64748b';this.style.borderColor='#1e293b'">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" style="width:14px;height:14px;flex-shrink:0"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+    shazish/kalshi-polymarket-tracker
+  </a>
+</div>
+
+<!-- ── Stats ────────────────────────────────────────────────────────────── -->
+<div class="stats section">
+  <div class="stat"><div class="val">10K+</div><div class="lbl">Markets scanned</div></div>
+  <div class="stat"><div class="val">~150</div><div class="lbl">Candidates per run</div></div>
+  <div class="stat"><div class="val">5</div><div class="lbl">Pipeline steps</div></div>
+  <div class="stat"><div class="val">free</div><div class="lbl">Research model (Owl Alpha)</div></div>
+</div>
+
+<!-- ── Deck ─────────────────────────────────────────────────────────────── -->
+<div class="section">
+  <h2>Quick Introduction</h2>
+  <div class="deck-wrapper">
+    <iframe src="deck.html" title="Kalshi Tracker — Explainer Deck" loading="lazy"></iframe>
+    <div class="deck-label">
+      <span>Use arrow keys or click ← → to navigate · Space to auto-play</span>
+      <a href="deck.html" target="_blank">Open full screen ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── Pipeline ─────────────────────────────────────────────────────────── -->
+<div class="section">
+  <h2>Pipeline</h2>
+  <p class="subtitle">Single command: <code style="font-family:monospace;font-size:11px;background:#1e293b;padding:2px 6px;border-radius:4px;color:#fde68a;">kalshi-pm-analyzer deep</code></p>
+  <div class="pipeline-steps">
+    <div class="step scan">
+      <div class="num">Step 1</div>
+      <div class="name">SCAN</div>
+      <div class="desc">Price + volume filters. No LLM. ~150 candidates from 10K markets.</div>
+    </div>
+    <div class="step research">
+      <div class="num">Step 2</div>
+      <div class="name">RESEARCH</div>
+      <div class="desc">Owl Alpha subagents run web searches in sequential batches of ~50.</div>
+    </div>
+    <div class="step classify">
+      <div class="num">Step 3</div>
+      <div class="name">CLASSIFY</div>
+      <div class="desc">LLM classifies each ticker using pre-conducted evidence. Checkpoint/resume.</div>
+    </div>
+    <div class="step verify">
+      <div class="num">Step 4</div>
+      <div class="name">VERIFY</div>
+      <div class="desc">Auto fact-checks CERTAIN entries. Downgrades hallucinations to LIKELY.</div>
+    </div>
+    <div class="step report">
+      <div class="num">Step 5</div>
+      <div class="name">REPORT</div>
+      <div class="desc">Excel report with Kelly-sized positions and edge after fees.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Docs ──────────────────────────────────────────────────────────────── -->
+<div class="section">
+  <h2>Documentation</h2>
+  <div class="doc-cards">
+    <a href="pipeline.html" class="doc-card">
+      <div class="doc-icon">⚙️</div>
+      <div class="doc-title">Pipeline Architecture</div>
+      <div class="doc-desc">End-to-end data flow, scan modes, batch research, classification loop, verification, and finalization. Covers all five steps in detail.</div>
+      <div class="doc-arrow">View →</div>
+    </a>
+    <a href="classifier.html" class="doc-card">
+      <div class="doc-icon">🧠</div>
+      <div class="doc-title">Classifier</div>
+      <div class="doc-desc">How the LLM classifier works — prompt structure, validation rules, CERTAIN / LIKELY / UNCLEAR schema, and evidence injection from Phase 1 research.</div>
+      <div class="doc-arrow">View →</div>
+    </a>
+    <a href="backtest.html" class="doc-card">
+      <div class="doc-icon">📊</div>
+      <div class="doc-title">Backtest</div>
+      <div class="doc-desc">Historical performance of CERTAIN classifications. Win rate, average edge captured, and Kelly sizing outcomes against resolved markets.</div>
+      <div class="doc-arrow">View →</div>
+    </a>
+  </div>
+</div>
+
+<!-- ── Technical details ─────────────────────────────────────────────────── -->
+<div class="section">
+  <h2>Technical Details</h2>
+  <div class="tech-grid">
+    <div class="tech-block">
+      <h3>Architecture</h3>
+      <ul>
+        <li><strong>Entry point:</strong> kalshi-pm-analyzer (single orchestrator)</li>
+        <li><strong>Research:</strong> Owl Alpha subagents via OpenRouter (free tier)</li>
+        <li><strong>Classification:</strong> scripts/classify_all.py — checkpoint/resume, saves after every ticker</li>
+        <li><strong>Verification:</strong> scripts/verify_classifications.py — hallucination + source checks</li>
+        <li><strong>Output:</strong> Excel report + pipeline_run.md log per run</li>
+        <li><strong>Anomaly mode:</strong> volume-first scanner detects smart-money signals below 80¢</li>
+      </ul>
+    </div>
+    <div class="tech-block">
+      <h3>Edge &amp; Sizing</h3>
+      <ul>
+        <li><strong>Kalshi fee:</strong> profit-based ~1.5% on winnings</li>
+        <li><strong>Polymarket fee:</strong> volume-based, per-category taker rates</li>
+        <li><strong>Threshold:</strong> min 3% edge after fees, 15% annualized</li>
+        <li><strong>Kelly cap:</strong> max 5% of bankroll per position</li>
+        <li><strong>Classification:</strong> CERTAIN / LIKELY / UNCLEAR with confidence score</li>
+        <li><strong>Runtime:</strong> ~60–90 min for 150 candidates (owl-alpha)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<footer style="padding-bottom: 48px; font-size: 11px; color: #64748b;">
+  <a href="../index.html" style="color: #94a3b8; text-decoration: none;" onmouseover="this.style.color='#e2e8f0'" onmouseout="this.style.color='#94a3b8'">← Back to portfolio</a>
+</footer>
+
+</body>
+</html>
