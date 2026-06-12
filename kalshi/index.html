@@ -3,290 +3,274 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kalshi Tracker — Project Overview</title>
+<title>Pythia — AI Pipeline for Financial Prediction</title>
 <link rel="stylesheet" href="shared.css">
-<style>
-  body { max-width: 980px; margin: 0 auto; min-width: 0; }
-
-  /* ── Back link ── */
-  .back {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 11px; color: #94a3b8; text-decoration: none;
-    margin-bottom: 32px;
-    transition: color 0.12s;
-  }
-  .back:hover { color: #e2e8f0; }
-
-  /* ── Hero ── */
-  .hero { margin-bottom: 48px; }
-  .hero h1 { font-size: 26px; color: #f8fafc; margin-bottom: 10px; }
-  .hero .tagline { font-size: 14px; color: #a0aec0; margin-bottom: 20px; line-height: 1.6; max-width: 680px; }
-  .hero .badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
-
-  /* ── Deck iframe ── */
-  .deck-wrapper {
-    border: 1px solid #4a5000;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 48px;
-    background: #5e6503;
-    position: relative;
-  }
-  .deck-wrapper iframe {
-    width: 100%;
-    aspect-ratio: 16/9;
-    display: block;
-    border: none;
-  }
-  .deck-label {
-    padding: 8px 14px;
-    font-size: 10px;
-    color: #a0aec0;
-    background: #3a3f01;
-    border-top: 1px solid #4a5000;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .deck-label a {
-    color: #5eead4; font-size: 10px; text-decoration: none;
-    transition: color 0.12s;
-  }
-  .deck-label a:hover { color: #99f6e4; }
-
-  /* ── Pipeline steps ── */
-  .pipeline-steps {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    margin-bottom: 48px;
-  }
-  .step {
-    background: #5e6503;
-    border: 1px solid #4a5000;
-    border-radius: 8px;
-    padding: 14px 12px;
-    text-align: center;
-  }
-  .step .num {
-    font-size: 9px; font-weight: 700; letter-spacing: 0.5px;
-    color: #a0aec0; text-transform: uppercase; margin-bottom: 6px;
-  }
-  .step .name { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
-  .step .desc { font-size: 10px; color: #a0aec0; line-height: 1.5; }
-  .step.scan   .name { color: #58C4DD; }
-  .step.research .name { color: #C792EA; }
-  .step.classify .name { color: #83C167; }
-  .step.verify .name { color: #FFD93D; }
-  .step.report .name { color: #FF6B6B; }
-
-  /* ── Doc cards ── */
-  .doc-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-bottom: 48px;
-  }
-  .doc-card {
-    background: #5e6503;
-    border: 1px solid #4a5000;
-    border-radius: 10px;
-    padding: 20px;
-    text-decoration: none;
-    color: inherit;
-    display: flex; flex-direction: column; gap: 8px;
-    transition: border-color 0.15s, background 0.15s;
-  }
-  .doc-card:hover { border-color: #7a8200; background: #6a7103; }
-  .doc-card .doc-icon { font-size: 22px; margin-bottom: 2px; }
-  .doc-card .doc-title { font-size: 13px; font-weight: 700; color: #e2e8f0; }
-  .doc-card .doc-desc  { font-size: 11px; color: #a0aec0; line-height: 1.55; flex: 1; }
-  .doc-card .doc-arrow { font-size: 10px; color: #7a8500; text-align: right; margin-top: 4px; }
-  .doc-card:hover .doc-arrow { color: #5eead4; }
-
-  /* ── Stats row ── */
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-bottom: 48px;
-  }
-  .stat {
-    background: #5e6503;
-    border: 1px solid #4a5000;
-    border-radius: 8px;
-    padding: 16px 14px;
-    text-align: center;
-  }
-  .stat .val { font-size: 22px; font-weight: 700; color: #5eead4; margin-bottom: 4px; }
-  .stat .lbl { font-size: 10px; color: #a0aec0; letter-spacing: 0.3px; }
-
-  /* ── Tech section ── */
-  .tech-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 48px;
-  }
-  .tech-block {
-    background: #5e6503;
-    border: 1px solid #4a5000;
-    border-radius: 8px;
-    padding: 18px;
-  }
-  .tech-block h3 { margin-bottom: 10px; }
-  .tech-block ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-  .tech-block li {
-    font-size: 11px; color: #a0aec0; line-height: 1.5;
-    padding-left: 14px; position: relative;
-  }
-  .tech-block li::before { content: "›"; position: absolute; left: 0; color: #8a9400; }
-  .tech-block li strong { color: #e2e8f0; }
-
-  @media (max-width: 700px) {
-    .pipeline-steps { grid-template-columns: 1fr 1fr; }
-    .doc-cards      { grid-template-columns: 1fr; }
-    .stats          { grid-template-columns: 1fr 1fr; }
-    .tech-grid      { grid-template-columns: 1fr; }
-  }
-</style>
+<link rel="stylesheet" href="index.css">
 </head>
 <body>
 
-<a href="../index.html" class="back">← shazish.github.io</a>
-
-<!-- ── Hero ────────────────────────────────────────────────────────────── -->
-<div class="hero">
-  <img src="../pythia-logo.svg" alt="Pythia — Prediction Intelligence" style="width:420px;display:block;justify-self:center;margin-bottom:20px;border-radius:12px;opacity:0.65;" />
-  <p class="tagline">
-    Autonomous pipeline that scans 10,000+ Kalshi and Polymarket prediction markets,
-    runs multi-agent web research on candidates, classifies near-certain outcomes with an LLM,
-    fact-checks every CERTAIN result, and outputs a Kelly-sized opportunity report.
-  </p>
-  <div class="badges">
-    <span class="badge badge-kalshi">Kalshi</span>
-    <span class="badge badge-poly">Polymarket</span>
-    <span class="badge badge-llm">LLM</span>
-    <span class="badge badge-quant">Kelly / Edge</span>
-    <span class="badge badge-file">Python</span>
-    <span class="badge badge-teal">Multi-agent</span>
-  </div>
-  <a href="https://github.com/shazish/kalshi-polymarket-tracker" target="_blank" rel="noreferrer"
-     style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#94a3b8;text-decoration:none;border:1px solid #4a5000;border-radius:6px;padding:5px 12px;transition:color 0.12s,border-color 0.12s;"
-     onmouseover="this.style.color='#5eead4';this.style.borderColor='#4a5000'"
-     onmouseout="this.style.color='#94a3b8';this.style.borderColor='#4a5000'">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" style="width:14px;height:14px;flex-shrink:0"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-    shazish/kalshi-polymarket-tracker
-  </a>
-</div>
-
-<!-- ── Stats ────────────────────────────────────────────────────────────── -->
-<div class="stats section">
-  <div class="stat"><div class="val">10K+</div><div class="lbl">Markets scanned</div></div>
-  <div class="stat"><div class="val">~150</div><div class="lbl">Candidates per run</div></div>
-  <div class="stat"><div class="val">5</div><div class="lbl">Pipeline steps</div></div>
-  <div class="stat"><div class="val">free</div><div class="lbl">Research model (Owl Alpha)</div></div>
-</div>
-
-<!-- ── Pipeline ─────────────────────────────────────────────────────────── -->
-<div class="section">
-  <h2>Pipeline</h2>
-  <p class="subtitle">Single command: <code style="font-family:monospace;font-size:11px;background:#3e4400;padding:2px 6px;border-radius:4px;color:#fde68a;">kalshi-pm-analyzer deep</code></p>
-  <div class="pipeline-steps">
-    <div class="step scan">
-      <div class="num">Step 1</div>
-      <div class="name">SCAN</div>
-      <div class="desc">Price + volume filters. No LLM. ~150 candidates from 10K markets.</div>
-    </div>
-    <div class="step research">
-      <div class="num">Step 2</div>
-      <div class="name">RESEARCH</div>
-      <div class="desc">Owl Alpha subagents run web searches in sequential batches of ~50.</div>
-    </div>
-    <div class="step classify">
-      <div class="num">Step 3</div>
-      <div class="name">CLASSIFY</div>
-      <div class="desc">LLM classifies each ticker using pre-conducted evidence. Checkpoint/resume.</div>
-    </div>
-    <div class="step verify">
-      <div class="num">Step 4</div>
-      <div class="name">VERIFY</div>
-      <div class="desc">Auto fact-checks CERTAIN entries. Downgrades hallucinations to LIKELY.</div>
-    </div>
-    <div class="step report">
-      <div class="num">Step 5</div>
-      <div class="name">REPORT</div>
-      <div class="desc">Excel report with Kelly-sized positions and edge after fees.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ── Deck ─────────────────────────────────────────────────────────────── -->
-<div class="section">
-  <h2>Quick Introduction</h2>
-  <div class="deck-wrapper">
-    <iframe src="deck.html" title="Kalshi Tracker — Explainer Deck" loading="lazy"></iframe>
-    <div class="deck-label">
-      <span>Use arrow keys or click ← → to navigate · Space to auto-play</span>
-      <a href="deck.html" target="_blank">Open full screen ↗</a>
-    </div>
-  </div>
-</div>
-
-<!-- ── Docs ──────────────────────────────────────────────────────────────── -->
-<div class="section">
-  <h2>Documentation</h2>
-  <div class="doc-cards">
-    <a href="pipeline.html" class="doc-card">
-      <div class="doc-icon">⚙️</div>
-      <div class="doc-title">Pipeline Architecture</div>
-      <div class="doc-desc">End-to-end data flow, scan modes, batch research, classification loop, verification, and finalization. Covers all five steps in detail.</div>
-      <div class="doc-arrow">View →</div>
+<!-- TOP NAV -->
+<!-- <nav class="top-nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <span class="nav-psi">Ψ</span>
+      <div>
+        <span class="nav-brand-name">PYTHIA</span>
+        <span class="nav-brand-sub">Prediction Intelligence</span>
+      </div>
     </a>
-    <a href="classifier.html" class="doc-card">
-      <div class="doc-icon">🧠</div>
-      <div class="doc-title">Classifier</div>
-      <div class="doc-desc">How the LLM classifier works — prompt structure, validation rules, CERTAIN / LIKELY / UNCLEAR schema, and evidence injection from Phase 1 research.</div>
-      <div class="doc-arrow">View →</div>
-    </a>
-    <a href="backtest.html" class="doc-card">
-      <div class="doc-icon">📊</div>
-      <div class="doc-title">Backtest</div>
-      <div class="doc-desc">Historical performance of CERTAIN classifications. Win rate, average edge captured, and Kelly sizing outcomes against resolved markets.</div>
-      <div class="doc-arrow">View →</div>
+    <div class="nav-links">
+      <a href="pipeline.html">Pipeline</a>
+      <a href="pipeline.html">Methodology</a>
+      <a href="classifier.html">Research</a>
+      <a href="backtest.html">Updates</a>
+    </div>
+    <a href="https://github.com/shazish/kalshi-polymarket-tracker" target="_blank" rel="noreferrer" class="nav-gh-btn">
+      ⭐ Star on GitHub
     </a>
   </div>
-</div>
+</nav> -->
 
-<!-- ── Technical details ─────────────────────────────────────────────────── -->
-<div class="section">
-  <h2>Technical Details</h2>
-  <div class="tech-grid">
-    <div class="tech-block">
-      <h3>Architecture</h3>
-      <ul>
-        <li><strong>Entry point:</strong> kalshi-pm-analyzer (single orchestrator)</li>
-        <li><strong>Research:</strong> Owl Alpha subagents via OpenRouter (free tier)</li>
-        <li><strong>Classification:</strong> scripts/classify_all.py — checkpoint/resume, saves after every ticker</li>
-        <li><strong>Verification:</strong> scripts/verify_classifications.py — hallucination + source checks</li>
-        <li><strong>Output:</strong> Excel report + pipeline_run.md log per run</li>
-        <li><strong>Anomaly mode:</strong> volume-first scanner detects smart-money signals below 80¢</li>
-      </ul>
-    </div>
-    <div class="tech-block">
-      <h3>Edge &amp; Sizing</h3>
-      <ul>
-        <li><strong>Kalshi fee:</strong> profit-based ~1.5% on winnings</li>
-        <li><strong>Polymarket fee:</strong> volume-based, per-category taker rates</li>
-        <li><strong>Threshold:</strong> min 3% edge after fees, 15% annualized</li>
-        <li><strong>Kelly cap:</strong> max 5% of bankroll per position</li>
-        <li><strong>Classification:</strong> CERTAIN / LIKELY / UNCLEAR with confidence score</li>
-        <li><strong>Runtime:</strong> ~60–90 min for 150 candidates (owl-alpha)</li>
-      </ul>
+<!-- HERO -->
+<section class="hero-section">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-tag">AUTONOMOUS • MULTI-AGENT • RESEARCH</div>
+        <h1 class="hero-h1">
+          <span class="line1">Pythia</span>
+          <span class="line2">A Kalshi-Polymarket Opportunity Finder</span>
+        </h1>
+        <hr class="hero-rule">
+        <p class="hero-desc">
+          Autonomous pipeline that scans 10,000+ Kalshi and Polymarket prediction markets, runs
+          multi-agent web research on candidates, classifies near-certain outcomes with an LLM,
+          fact-checks every CERTAIN result, and outputs a Kelly-sized opportunity report.
+        </p>
+
+        <a href="https://github.com/shazish/pythia-kalshi-pm-finder" target="_blank" rel="noreferrer" class="hero-gh-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" style="width:15px;height:15px;flex-shrink:0"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          shazish/pythia-kalshi-pm-finder
+        </a>
+      </div>
+      <div class="hero-right">
+        <img src="../pythia-logo.svg" alt="Pythia — Prediction Intelligence" class="hero-svg-logo">
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-<footer style="padding-bottom: 48px; font-size: 11px; color: #a0aec0;">
-  <a href="../index.html" style="color: #94a3b8; text-decoration: none;" onmouseover="this.style.color='#e2e8f0'" onmouseout="this.style.color='#94a3b8'">← Back to portfolio</a>
+<!-- FEATURE HIGHLIGHTS -->
+<section class="features-section">
+  <div class="container">
+    <div class="features-grid">
+      <div class="feat-card">
+        <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <polyline points="9 12 11 14 15 10"/>
+        </svg>
+        <div class="feat-title">Fact-checked outputs</div>
+        <div class="feat-desc">Every CERTAIN classification is automatically re-verified against sources. Hallucinations get downgraded to LIKELY before the report is written.</div>
+      </div>
+      <div class="feat-card">
+        <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+        </svg>
+        <div class="feat-title">Kelly-sized positions</div>
+        <div class="feat-desc">Position sizes are computed per conviction level using the Kelly criterion, capped at 5% of bankroll. Edge is shown net of Kalshi and Polymarket fees.</div>
+      </div>
+      <div class="feat-card">
+        <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/>
+        </svg>
+        <div class="feat-title">Checkpoint / resume</div>
+        <div class="feat-desc">Classification state is saved after every ticker. Interrupt and restart at any point — already-classified markets are skipped on the next run.</div>
+      </div>
+      <div class="feat-card">
+        <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/>
+        </svg>
+        <div class="feat-title">Free research model</div>
+        <div class="feat-desc">Web research runs on Owl Alpha via OpenRouter's free tier. No API cost per candidate. Only the final classification step uses a paid LLM call.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PIPELINE -->
+<section class="pipeline-section">
+  <div class="container">
+    <div class="section-head">
+      <div class="s-dot"></div>
+      <h2>Pipeline</h2>
+    </div>
+    <div class="section-sub">↳ Single command: <code>pythia-main {mode}</code></div>
+    <div class="pipe-row">
+      <div class="pipe-step scan">
+        <div class="pipe-step-num">Step 1</div>
+        <svg class="pipe-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+        <div class="pipe-name">SCAN</div>
+        <div class="pipe-desc">Price + volume filters. No LLM. ~150 candidates from 10K markets.</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step research">
+        <div class="pipe-step-num">Step 2</div>
+        <svg class="pipe-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <div class="pipe-name">RESEARCH</div>
+        <div class="pipe-desc">Owl Alpha subagents run web searches in sequential batches of ~50.</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step classify">
+        <div class="pipe-step-num">Step 3</div>
+        <svg class="pipe-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+        </svg>
+        <div class="pipe-name">CLASSIFY</div>
+        <div class="pipe-desc">LLM classifies each ticker using pre-conducted evidence. Checkpoint/resume.</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step verify">
+        <div class="pipe-step-num">Step 4</div>
+        <svg class="pipe-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        <div class="pipe-name">VERIFY</div>
+        <div class="pipe-desc">Auto fact-checks CERTAIN entries. Downgrades hallucinations to LIKELY.</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step report">
+        <div class="pipe-step-num">Step 5</div>
+        <svg class="pipe-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+        </svg>
+        <div class="pipe-name">REPORT</div>
+        <div class="pipe-desc">Excel report with Kelly-sized positions and edge after fees.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK INTRO -->
+<!-- <section class="intro-section">
+  <div class="container">
+    <div class="section-head" style="margin-bottom:16px;">
+      <div class="s-dot"></div>
+      <h2>Quick Introduction</h2>
+    </div>
+    <div class="intro-card">
+      <div class="intro-inner">
+        <div class="intro-left">
+          <div>
+            <div class="intro-big">10,000+ Open Markets</div>
+            <div class="intro-sub">Most are noise.<br>Some are near-certainties.</div>
+          </div>
+          <svg class="intro-wave" viewBox="0 0 320 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 18 Q20 4 40 18 Q60 32 80 18 Q100 4 120 18 Q140 32 160 18 Q180 4 200 18 Q220 32 240 18 Q260 4 280 18 Q300 32 320 18" stroke="#4ecdc4" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
+        <div class="intro-right">
+          <div class="mkt-row">
+            <span class="mkt-q">Will Powell leave before May 20?</span>
+            <span class="mkt-ans no">NO @ 96c</span>
+          </div>
+          <div class="mkt-row">
+            <span class="mkt-q">Will Beyoncé release an album?</span>
+            <span class="mkt-ans no">NO @ 86c</span>
+          </div>
+          <div class="mkt-row">
+            <span class="mkt-q">Will unemployment hit 8%?</span>
+            <span class="mkt-ans no">NO @ 93c</span>
+          </div>
+          <div class="mkt-row">
+            <span class="mkt-q">Will Congress avoid shutdown?</span>
+            <span class="mkt-ans yes">YES @ 60c</span>
+          </div>
+          <div class="mkt-row">
+            <span class="mkt-q">Will SpaceX IPO by June?</span>
+            <span class="mkt-ans yes">YES @ 84c</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!-- DOCS -->
+<section class="docs-section">
+  <div class="container">
+    <div class="section-head">
+      <div class="s-dot"></div>
+      <h2>Documentation</h2>
+    </div>
+    <div style="margin-bottom:20px;"></div>
+    <div class="doc-grid">
+      <a href="pipeline.html" class="doc-card">
+        <div class="d-icon">⚙️</div>
+        <div class="d-title">Pipeline Architecture</div>
+        <div class="d-desc">End-to-end data flow, scan modes, batch research, classification loop, verification, and finalization. Covers all five steps in detail.</div>
+        <div class="d-arr">View →</div>
+      </a>
+      <a href="classifier.html" class="doc-card">
+        <div class="d-icon">🧠</div>
+        <div class="d-title">Classifier</div>
+        <div class="d-desc">How the LLM classifier works — prompt structure, validation rules, CERTAIN / LIKELY / UNCLEAR schema, and evidence injection from Phase 1 research.</div>
+        <div class="d-arr">View →</div>
+      </a>
+      <a href="backtest.html" class="doc-card">
+        <div class="d-icon">📊</div>
+        <div class="d-title">Backtest</div>
+        <div class="d-desc">Historical performance of CERTAIN classifications. Win rate, average edge captured, and Kelly sizing outcomes against resolved markets.</div>
+        <div class="d-arr">View →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TECH -->
+<section class="tech-section">
+  <div class="container">
+    <div class="section-head">
+      <div class="s-dot"></div>
+      <h2>Technical Details</h2>
+    </div>
+    <div style="margin-bottom:20px;"></div>
+    <div class="tech-grid">
+      <div class="tech-block">
+        <h3>Architecture</h3>
+        <ul>
+          <li><strong>Entry point:</strong> kalshi-pm-analyzer (single orchestrator)</li>
+          <li><strong>Research:</strong> Owl Alpha subagents via OpenRouter (free tier)</li>
+          <li><strong>Classification:</strong> scripts/classify_all.py — checkpoint/resume, saves after every ticker</li>
+          <li><strong>Verification:</strong> scripts/verify_classifications.py — hallucination + source checks</li>
+          <li><strong>Output:</strong> Excel report + pipeline_run.md log per run</li>
+          <li><strong>Anomaly mode:</strong> volume-first scanner detects smart-money signals below 80¢</li>
+        </ul>
+      </div>
+      <div class="tech-block">
+        <h3>Edge &amp; Sizing</h3>
+        <ul>
+          <li><strong>Kalshi fee:</strong> profit-based ~1.5% on winnings</li>
+          <li><strong>Polymarket fee:</strong> volume-based, per-category taker rates</li>
+          <li><strong>Threshold:</strong> min 3% edge after fees, 15% annualized</li>
+          <li><strong>Kelly cap:</strong> max 5% of bankroll per position</li>
+          <li><strong>Classification:</strong> CERTAIN / LIKELY / UNCLEAR with confidence score</li>
+          <li><strong>Runtime:</strong> ~60–90 min for 150 candidates (owl-alpha)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    Kalshi &nbsp;•&nbsp; Polymarket
+  </div>
 </footer>
 
 </body>
