@@ -137,7 +137,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-muted);
   text-decoration: none;
   transition: color 0.12s;
@@ -178,7 +178,7 @@ body {
 }
 
 .sec-eyebrow {
-  font-size: 9.5px;
+  font-size: 26px;
   font-weight: 700;
   letter-spacing: 2.5px;
   text-transform: uppercase;
