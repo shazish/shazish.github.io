@@ -1,0 +1,10 @@
+{
+  "name": "shaun-shahbazi-portfolio",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -c tailwind.config.cjs -i portfolio.input.css -o portfolio.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
+}

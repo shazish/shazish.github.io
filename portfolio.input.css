@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  body { line-height: 1.65; }
+  a:focus-visible { outline: 2px solid #5eead4; outline-offset: 5px; }
+  ::selection { background: #5eead4; color: #0f172a; }
+}
+@layer components {
+  .project-image { width: 96px; height: 72px; max-width: 100%; object-fit: contain; border-radius: .5rem; background: #000; }
+  .cta { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: .65rem 1rem; border-radius: .5rem; background: #5eead4; color: #0f172a; font-weight: 600; font-size: .875rem; }
+  .cta:hover { background: #99f6e4; }
+  .cta-secondary { background: #1e293b; color: #e2e8f0; border: 1px solid #94a3b8; }
+  .cta-secondary:hover { background: #334155; }
+  .skip-link { position: absolute; top: 1rem; left: 1rem; padding: .75rem; background: #5eead4; color: #0f172a; transform: translateY(-200%); z-index: 100; }
+  .skip-link:focus { transform: translateY(0); }
+  .architecture { padding: 1.5rem; background: #1e293b; border: 1px solid #475569; border-radius: .75rem; text-align: center; }
+  .architecture > div:not(.architecture-row), .architecture-row > div { padding: 1rem; border: 1px solid #94a3b8; border-radius: .5rem; }
+  .architecture-row { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; }
+  .architecture small { color: #cbd5e1; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto !important; } *, *::before, *::after { transition: none !important; } }

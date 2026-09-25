@@ -6,7 +6,7 @@
 
 .zone.z1 { border-color: #4a90d9; color: #4a90d9; }
 .zone.z2 { border-color: #5b8def; color: #5b8def; }
-.zone.z3 { border-color: #0072c6; color: #0072c6; }
+.zone.z3 { border-color: #60a5fa; color: #60a5fa; }
 
 .flow { display: grid; grid-template-columns: 1fr 1fr 1fr; background: #0f172a; border: 1px solid #334155; border-top: none; border-radius: 0 0 10px 10px; position: relative; min-height: 520px; }
 .col { padding: 32px 20px; display: flex; flex-direction: column; gap: 16px; align-items: center; }
@@ -37,4 +37,7 @@
 .step:last-child .step-connector { display: none; }
 .step-num { width: 26px; height: 26px; border-radius: 50%; background: #1e293b; border: 1.5px solid #475569; color: #cbd5e1; font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; z-index: 1; flex-shrink: 0; margin-bottom: 10px; }
 .step-label { font-size: 11px; color: #94a3b8; text-align: center; max-width: 100px; line-height: 1.5; }
-.footer { margin-top: 40px; font-size: 11px; color: #64748b; font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.5px; text-align: center; }
+.footer { margin-top: 40px; font-size: 11px; color: #94a3b8; font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.5px; text-align: center; }
+/* Keep the detailed proxy diagram readable within a keyboard-accessible scroll region. */
+.diagram-scroll { max-width: 100%; overflow-x: auto; padding-bottom: 1rem; }
+.diagram-scroll .diagram-container { min-width: 760px; }

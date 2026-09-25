@@ -4,48 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HTH 2.0 Stack Assessment</title>
-    
-    <link rel="stylesheet" href="styles.css">
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: { colors: { goldgreen: '#494f02', navy: '#0f172a', lightNavy: '#1e293b', tealAccent: '#5eead4' } }
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="portfolio.css">
 </head>
-<body class="bg-goldgreen text-slate-400 font-sans antialiased selection:bg-tealAccent selection:text-teal-900">
+<body class="bg-navy text-slate-400 font-sans antialiased selection:bg-tealAccent selection:text-teal-900">
 
     <div class="mx-auto min-h-screen max-w-screen-xl px-6 py-12 md:px-12 md:py-20 lg:px-24">
-        
+
         <a href="index.html" class="group inline-flex items-center font-medium leading-tight text-tealAccent hover:text-teal-300 mb-10 transition-colors">
             <span class="mr-2 transition-transform group-hover:-translate-x-1 motion-reduce:transition-none">&larr;</span> Back to Portfolio
         </a>
 
         <div class="mb-12">
-            <header class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">Research & Architecture</header>
+            <header class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Research & Architecture</header>
             <h1 class="text-3xl font-bold tracking-tight text-slate-200 sm:text-4xl mb-4">HTH 2.0 Tech Stack Assessment</h1>
             <p class="max-w-3xl text-base leading-relaxed text-slate-300 mb-6">
-                To prepare for the Hills To Home 2.0 project, I led an initiative to establish a modernized, future-proof frontend architecture. The goal was to balance cutting-edge developer experience with the rigorous maturity, stability, and integration requirements of a large-scale enterprise environment. Below is the outcome of that architectural decision matrix.
+                Architecture assessment and Architectural Decision Record (ADR) for Hill’s To Home 2.0. I evaluated frameworks, state management, and build tooling against enterprise requirements. Enterprise architecture adopted the design as a template for future external web projects. The selections below document the assessment and recommendations, not a shipped HTH 2.0 implementation.
             </p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            
+
             <div class="bg-lightNavy border border-slate-700/50 rounded-xl p-6 shadow-lg flex flex-col h-full">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-lg font-semibold text-slate-200">Application Framework</h2>
-                    <span class="bg-teal-400/10 text-tealAccent text-xs px-3 py-1 rounded-full font-medium">Selected</span>
+                    <span class="bg-teal-400/10 text-tealAccent text-xs px-3 py-1 rounded-full font-medium">Recommended</span>
                 </div>
                 <h3 class="text-2xl font-bold text-white mb-2">Next.js</h3>
                 <p class="text-sm text-slate-400 mb-6 flex-grow">
                     Chosen for its feature-rich environment, massive enterprise adoption, and out-of-the-box routing. Its server-side API routes provide an excellent integration layer for the broader SAP ecosystem.
                 </p>
-                
+
                 <div class="border-t border-slate-700/50 pt-4">
-                    <h4 class="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-3">Alternatives Evaluated</h4>
+                    <h4 class="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-3">Alternatives Evaluated</h4>
                     <ul class="space-y-3 text-sm">
                         <li class="flex items-start">
                             <span class="text-red-400 mr-2">✕</span>
@@ -62,15 +54,15 @@
             <div class="bg-lightNavy border border-slate-700/50 rounded-xl p-6 shadow-lg flex flex-col h-full">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-lg font-semibold text-slate-200">State & Data</h2>
-                    <span class="bg-teal-400/10 text-tealAccent text-xs px-3 py-1 rounded-full font-medium">Selected</span>
+                    <span class="bg-teal-400/10 text-tealAccent text-xs px-3 py-1 rounded-full font-medium">Recommended</span>
                 </div>
                 <h3 class="text-2xl font-bold text-white mb-2">RTK + React Query</h3>
                 <p class="text-sm text-slate-400 mb-6 flex-grow">
                     Redux Toolkit (RTK) handles complex, predictable global state transitions, while React Query abstracts away the heavy lifting of caching, synchronizing, and fetching remote SAP API data.
                 </p>
-                
+
                 <div class="border-t border-slate-700/50 pt-4">
-                    <h4 class="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-3">Alternatives Evaluated</h4>
+                    <h4 class="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-3">Alternatives Evaluated</h4>
                     <ul class="space-y-3 text-sm">
                         <li class="flex items-start">
                             <span class="text-red-400 mr-2">✕</span>
@@ -87,15 +79,15 @@
             <div class="bg-lightNavy border border-slate-700/50 rounded-xl p-6 shadow-lg flex flex-col h-full">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-lg font-semibold text-slate-200">Build Tooling</h2>
-                    <span class="bg-teal-400/10 text-tealAccent text-xs px-3 py-1 rounded-full font-medium">Selected</span>
+                    <span class="bg-teal-400/10 text-tealAccent text-xs px-3 py-1 rounded-full font-medium">Recommended</span>
                 </div>
                 <h3 class="text-2xl font-bold text-white mb-2">Webpack + SWC</h3>
                 <p class="text-sm text-slate-400 mb-6 flex-grow">
                     Selected as the native, zero-configuration default within the Next.js ecosystem. SWC (Rust-based) significantly reduces compilation times without requiring complex custom configurations.
                 </p>
-                
+
                 <div class="border-t border-slate-700/50 pt-4">
-                    <h4 class="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-3">Alternatives Evaluated</h4>
+                    <h4 class="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-3">Alternatives Evaluated</h4>
                     <ul class="space-y-3 text-sm">
                         <li class="flex items-start">
                             <span class="text-red-400 mr-2">✕</span>

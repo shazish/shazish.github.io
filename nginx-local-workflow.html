@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Local Micro-Frontend Proxy</title>
-    
+
     <link rel="stylesheet" href="styles.css">
 
     <style>
@@ -13,26 +13,18 @@
         /* Ensures the path labels render on top of the node boxes if they get close */
         .arrows-svg { z-index: 20 !important; }
     </style>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: { colors: { goldgreen: '#494f02', navy: '#0f172a', lightNavy: '#1e293b', tealAccent: '#5eead4' } }
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="portfolio.css">
 </head>
-<body class="bg-goldgreen text-slate-400 font-sans antialiased selection:bg-tealAccent selection:text-teal-900">
+<body class="bg-navy text-slate-400 font-sans antialiased selection:bg-tealAccent selection:text-teal-900">
 
     <div class="mx-auto min-h-screen max-w-screen-xl px-6 py-12 md:px-12 md:py-20 lg:px-24">
-        
+
         <a href="index.html" class="group inline-flex items-center font-medium leading-tight text-tealAccent hover:text-teal-300 mb-10 transition-colors">
             <span class="mr-2 transition-transform group-hover:-translate-x-1 motion-reduce:transition-none">&larr;</span> Back to Portfolio
         </a>
 
         <div class="mb-16 md:mb-24">
-            <header class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">Developer Infrastructure</header>
+            <header class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Developer Infrastructure</header>
             <h1 class="text-3xl font-bold tracking-tight text-slate-200 sm:text-4xl mb-4">Local Micro-Frontend Proxy</h1>
             <p class="max-w-3xl text-base leading-relaxed text-slate-300 mb-6">
                 Engineered a local reverse proxy using Nginx to unify an ecosystem of 7+ disparate micro-frontends during development. Configured port mapping and route-based proxying via <code>nginx.conf</code>, enabling developers to traverse the entire site (Home, Catalogue, Cart, Checkout, etc.) on a single domain and eliminating the complex overhead of manually managing multiple local ports.
@@ -44,6 +36,7 @@
             </ul>
         </div>
 
+        <div class="diagram-scroll" role="region" aria-label="Local proxy architecture diagram; scroll horizontally on small screens" tabindex="0">
         <div class="diagram-container">
             <div class="zones">
                 <div class="zone z1">Local Machine</div>
@@ -52,7 +45,7 @@
             </div>
 
             <div class="flow" id="flow" style="min-height: 600px;">
-                
+
                 <div class="col" style="justify-content: center;">
                     <div class="node sap" id="n-browser">
                         <div class="node-top"><div class="icon sap">🌐</div><div><div class="node-title">Web Browser</div><div class="node-sub">Localhost</div></div></div>
@@ -88,7 +81,7 @@
 
                 <svg class="arrows-svg" id="svg" xmlns="http://www.w3.org/2000/svg"></svg>
             </div>
-            
+
             <div class="steps">
                 <div class="step"><div class="step-connector"></div><div class="step-num">1</div><div class="step-label">Browser calls Port 4001</div></div>
                 <div class="step"><div class="step-connector"></div><div class="step-num">2</div><div class="step-label">Nginx evaluates URI path</div></div>
@@ -106,22 +99,22 @@
             const svg = document.getElementById('svg');
             const container = document.getElementById('flow');
             if (!svg || !container) return;
-            
+
             svg.innerHTML = '';
             const cr = container.getBoundingClientRect();
-          
+
             function right(el) { const r = el.getBoundingClientRect(); return { x: r.right - cr.left, y: (r.top + r.bottom) / 2 - cr.top }; }
             function left(el) { const r = el.getBoundingClientRect(); return { x: r.left - cr.left, y: (r.top + r.bottom) / 2 - cr.top }; }
-          
+
             const browser = document.getElementById('n-browser');
             const nginx = document.getElementById('n-nginx');
             const home = document.getElementById('n-home');
             const cat = document.getElementById('n-catalogue');
             const cart = document.getElementById('n-cart');
             const checkout = document.getElementById('n-checkout');
-          
+
             if (!browser || !nginx || !home) return;
-          
+
             // The 5th parameter is the position multiplier. Staggering them prevents overlapping text.
             const arcs = [
               [right(browser), left(nginx), '#4a90d9', 'Request', 0.5],
@@ -130,10 +123,10 @@
               [right(nginx), left(cart), '#f4a623', 'Path: /cart/', 0.45],
               [right(nginx), left(checkout), '#4a90d9', 'Path: /checkout/', 0.70]
             ];
-          
+
             const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
             svg.appendChild(defs);
-          
+
             function ensureMarker(color) {
               const id = 'arr-' + color.replace('#','');
               if (defs.querySelector('#' + id)) return id;
@@ -147,20 +140,20 @@
               m.appendChild(p); defs.appendChild(m);
               return id;
             }
-          
+
             // Now accepts the position multiplier parameter
             arcs.forEach(([s, e, color, label, posMultiplier = 0.5]) => {
               const mid = ensureMarker(color);
-              
+
               const cx = (s.x + e.x) / 2;
               let d = `M ${s.x} ${s.y} C ${cx} ${s.y}, ${cx} ${e.y}, ${e.x} ${e.y}`;
-          
+
               const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
               path.setAttribute('d', d); path.setAttribute('stroke', color);
               path.setAttribute('stroke-width', '1.5'); path.setAttribute('fill', 'none');
               path.setAttribute('marker-end', `url(#${mid})`); path.setAttribute('opacity', '0.7');
               svg.appendChild(path);
-          
+
               if (label && path.getTotalLength) {
                 const len = path.getTotalLength();
                 if(len > 0) {
@@ -172,7 +165,7 @@
                     bg.setAttribute('width', w); bg.setAttribute('height', 18);
                     bg.setAttribute('rx', '4'); bg.setAttribute('fill', '#0f172a');
                     svg.appendChild(bg);
-              
+
                     const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                     txt.setAttribute('x', mp.x); txt.setAttribute('y', mp.y + 3);
                     txt.setAttribute('text-anchor', 'middle'); txt.setAttribute('font-size', '10');
@@ -183,7 +176,7 @@
               }
             });
         }
-          
+
         window.addEventListener('load', () => {
             const flow = document.getElementById('flow');
             if (flow) { new ResizeObserver(drawNginxDiagram).observe(flow); }
