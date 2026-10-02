@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Inside Pythia's evidence verification: source policy, exact article passages, settlement rules, claim verdicts, and the final opportunity gate.">
+  <title>Pythia — Inside evidence verification</title>
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="verification.css">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header container">
+    <a class="wordmark" href="index.html" aria-label="Pythia overview"><span aria-hidden="true">Ψ</span> Pythia</a>
+    <p class="breadcrumb"><a href="index.html#pipeline">Pipeline</a> <span aria-hidden="true">/</span> Verification</p>
+  </header>
+  <main id="main">
+    <section class="hero container" aria-labelledby="page-title">
+      <p class="eyebrow">Stage 04</p>
+      <h1 id="page-title">Evidence verification</h1>
+      <p class="lead">How Pythia checks cited claims against source text and the contract’s settlement rules.</p>
+      <p class="intro">For regular scans, Pythia reviews the supporting claims behind each remaining CERTAIN classification. Readable evidence, a matching settlement rule, and a current review are all required before finalization can consider the opportunity.</p>
+      <p class="caption">Applies to regular CERTAIN results. STRONG anomalies follow a separate scoring route.</p>
+      <nav class="contents" aria-label="On this page"><span class="contents-label">On this page</span><a href="#roles">Challenge &amp; verification</a><a href="#checks">Checks</a><a href="#example">Example</a><a href="#outcomes">Outcomes</a><a href="#technical">Technical details</a></nav>
+    </section>
+
+    <section class="section container" id="roles" aria-labelledby="roles-title">
+      <div class="section-heading"><h2 id="roles-title">Challenge and verification</h2></div>
+      <div class="cards">
+        <article class="card"><h3>Adversarial challenge</h3><p>A second model pass evaluates counterarguments: an alternative path, settlement ambiguity, or a development that could change the outcome.</p><p>If it reports a challenge with strength of at least 70, the script downgrades CERTAIN to LIKELY. This model assessment is distinct from retrieving and checking the cited articles.</p></article>
+        <article class="card"><h3>Evidence verification</h3><p>The verifier captures cited pages and reviews their text against each claim and the contract. It records a separate evidence status rather than treating model confidence as proof.</p><p>An unverifiable result can retain its CERTAIN label, but finalization withholds it from actionable opportunities.</p></article>
+      </div>
+    </section>
+
+    <section class="section container" id="checks" aria-labelledby="checks-title">
+      <div class="section-heading"><h2 id="checks-title">Verification checks</h2><p>Code handles eligibility and validation. The model assesses the meaning of the captured text.</p></div>
+      <figure class="evidence-map" aria-labelledby="evidence-map-caption">
+        <figcaption id="evidence-map-caption">What must match for one claim</figcaption>
+        <div class="evidence-route">
+          <div class="evidence-input">
+            <div class="mini-document"><span class="document-lines" aria-hidden="true"></span><strong>Research</strong><span>Claim + cited URL</span></div>
+            <span class="route-arrow" aria-hidden="true">↓</span>
+            <div class="mini-document"><span class="document-lines" aria-hidden="true"></span><strong>Captured article</strong><span>Readable source text</span></div>
+            <span class="route-note">URL and domain must pass policy checks.</span>
+          </div>
+          <span class="route-arrow cross-arrow" aria-hidden="true">→</span>
+          <div class="evidence-match">
+            <div class="matching-pair"><span>Article passage</span><span aria-hidden="true">↔</span><span>Contract rules</span></div>
+            <div class="match-checks"><span>Entity &amp; metric</span><span>Unit &amp; threshold</span><span>Period &amp; authority</span></div>
+            <p>Model assesses support, credibility, settlement match, and timing.</p>
+          </div>
+          <span class="route-arrow cross-arrow" aria-hidden="true">→</span>
+          <div class="evidence-result"><span class="result-check" aria-hidden="true">✓</span><strong>Verified claim</strong><span>Exact excerpt + valid review</span><span class="route-note">Only when every required check passes.</span></div>
+        </div>
+        <p class="diagram-note">Missing support → unverifiable. Explicit contrary evidence → contradicted.</p>
+      </figure>
+      <details class="checks-disclosure"><summary>Read each verification check</summary>
+      <ol class="steps">
+        <li><span class="step-number" aria-hidden="true">01</span><div><div class="step-heading"><h3>Citation provenance</h3><span class="tag">Code</span></div><p>Each confirming signal needs a structured claim and a full HTTPS citation. That exact URL must appear in the research for the same ticker. A plausible-looking link is not enough.</p><p class="detail"><strong>Stops here:</strong> A missing claim, an invalid URL, or a citation absent from that market’s research.</p></div></li>
+        <li><span class="step-number" aria-hidden="true">02</span><div><div class="step-heading"><h3>Source policy</h3><span class="tag">Code</span></div><p>A domain can be trusted, blocked, unknown, or approved as a resolution authority for a specific contract. Blocked domains take precedence. Redirect destinations are checked too.</p><p class="detail"><strong>Trust is permission to review.</strong> It does not establish that an article supports a claim. Unknown domains remain unverifiable; automatic discovery and independent corroboration are not implemented.</p></div></li>
+        <li><span class="step-number" aria-hidden="true">03</span><div><div class="step-heading"><h3>Source capture</h3><span class="tag">Retrieval + cache</span></div><p>Fetch the page or reuse a fresh cached copy. The capture records the text, final URL, retrieval time, and a fingerprint of the content. HTML and plain text are supported; PDFs need a readable alternative.</p><p class="detail"><strong>A successful fetch is not enough.</strong> The model must still distinguish substantive reporting from a login screen, paywall, teaser, or error page.</p></div></li>
+        <li><span class="step-number" aria-hidden="true">04</span><div><div class="step-heading"><h3>Settlement matching</h3><span class="tag">Model review</span></div><p>The reviewer assesses readability, factual credibility, claim support, settlement match, and timing. It sees the contract’s primary and secondary rules, selected side, closing date, and captured articles.</p><p class="detail">The entity, metric, units, threshold, period, and resolution authority must match. A forecast or today’s observation does not establish a future outcome. The reviewer has no browsing tools and treats page contents as data, never instructions.</p></div></li>
+        <li><span class="step-number" aria-hidden="true">05</span><div><div class="step-heading"><h3>Review validation</h3><span class="tag">Code</span></div><p>The response must include every expected claim ID, valid verdicts, literal boolean flags, and evidence-specific reasons. Supported and contradicted verdicts need an exact passage of at least 20 characters from the captured text, with whitespace normalized.</p><p class="detail"><strong>No invented quotations.</strong> Malformed responses, missing claims, API errors, and oversized inputs leave pending claims unverified.</p></div></li>
+      </ol>
+      </details>
+    </section>
+
+    <section class="section container" id="example" aria-labelledby="example-title">
+      <div class="section-heading"><h2 id="example-title">Worked example: matching the settlement metric</h2><p>This fictional example follows one supporting claim. The excerpts below are invented to explain the checks; they are not market data or real source quotations.</p></div>
+      <div class="example-contract">
+        <span class="card-index">Hypothetical contract</span>
+        <h3>Will the first published September index be below 3.0%?</h3>
+        <p><strong>Settlement rule:</strong> Use the named statistics office’s first September year-over-year release. Later revisions do not count.</p>
+        <p><strong>Claim being checked:</strong> “The first September year-over-year release is 2.8%, below the threshold.”</p>
+        <p class="caption">Assume the cited URL is in this ticker’s research, the domain is approved, and the release date has passed.</p>
+      </div>
+      <div class="example-cases">
+        <article><div class="case-heading"><span class="verdict verified">Verified claim</span><h3>Matching release</h3></div><blockquote>“The first release of the September index shows a year-over-year increase of 2.8%.”</blockquote><p>The period, metric, release version, and authority match. If the article is readable and credible and the review passes validation, this claim is verified.</p></article>
+        <article><div class="case-heading"><span class="verdict uncertain">Unverifiable claim</span><h3>Wrong metric</h3></div><blockquote>“The September index rose at a 2.8% annualized rate over the latest quarter.”</blockquote><p>An annualized quarterly rate is not the required year-over-year rate. This passage does not establish the claim, even though the number looks right.</p></article>
+        <article><div class="case-heading"><span class="verdict contradicted">Contradicted claim</span><h3>Conflicting release</h3></div><blockquote>“The first release of the September index shows a year-over-year increase of 3.2%.”</blockquote><p>Readable, credible, time-relevant evidence explicitly conflicts with the 2.8% claim. This is a contradiction, rather than merely a lack of support.</p></article>
+      </div>
+      <p class="note"><strong>One verified claim is not a verified market.</strong> This example isolates a single claim. Every confirming signal on the candidate must pass; the classification must also satisfy its own structural checks.</p>
+    </section>
+
+    <section class="section container" id="outcomes" aria-labelledby="outcomes-title">
+      <div class="section-heading"><h2 id="outcomes-title">Verification outcomes</h2><p>Candidate status is determined by all of its claim checks, with contradictions taking precedence.</p></div>
+      <figure class="claim-map" aria-labelledby="claim-map-caption">
+        <figcaption id="claim-map-caption">How claim results combine <span>Illustrative sets of three claims</span></figcaption>
+        <div class="claim-map-row"><div class="claim-set"><span class="claim-mark verified" role="img" aria-label="Verified claim">✓</span><span class="claim-mark verified" role="img" aria-label="Verified claim">✓</span><span class="claim-mark verified" role="img" aria-label="Verified claim">✓</span></div><span class="claim-arrow" aria-hidden="true">→</span><div class="claim-verdict"><strong class="verified">Verified</strong><span>All claims pass</span></div><span class="claim-action">Continue to final checks</span></div>
+        <div class="claim-map-row"><div class="claim-set"><span class="claim-mark verified" role="img" aria-label="Verified claim">✓</span><span class="claim-mark contradicted" role="img" aria-label="Contradicted claim">×</span><span class="claim-mark uncertain" role="img" aria-label="Unverifiable claim">?</span></div><span class="claim-arrow" aria-hidden="true">→</span><div class="claim-verdict"><strong class="contradicted">Contradicted</strong><span>Any contradiction takes precedence</span></div><span class="claim-action">Withhold opportunity</span></div>
+        <div class="claim-map-row"><div class="claim-set"><span class="claim-mark verified" role="img" aria-label="Verified claim">✓</span><span class="claim-mark verified" role="img" aria-label="Verified claim">✓</span><span class="claim-mark uncertain" role="img" aria-label="Unverifiable claim">?</span></div><span class="claim-arrow" aria-hidden="true">→</span><div class="claim-verdict"><strong class="uncertain">Unverifiable</strong><span>No contradiction; support incomplete</span></div><span class="claim-action">Withhold opportunity</span></div>
+        <p class="diagram-note">There must be at least one claim check, and every claim must pass. No checks also means unverifiable.</p>
+      </figure>
+      <div class="note"><strong>Passing verification does not guarantee inclusion.</strong> Finalization independently checks that verification still matches the candidate, classification, and source policy. Quote freshness, market availability, estimated edge, sizing, and duplicate-notification checks follow.</div>
+    </section>
+
+    <section class="section container" id="technical" aria-labelledby="technical-title">
+      <div class="section-heading"><h2 id="technical-title">Technical details</h2><p>These implementation details explain how a result can be reviewed later—and why an earlier pass may no longer qualify.</p></div>
+      <details>
+        <summary>Caching, expiry, and review limits</summary>
+        <div class="detail-body">
+          <p>Captured pages and reviews expire after <strong>24 hours by default</strong>. Policy can change either lifetime up to seven days. A review is tied to the candidate and classification, citation, claim, captured content, and source policy; changed inputs require a matching review.</p>
+          <p>Fresh supported, contradicted, and automatic unverifiable reviews are reused. Fetch failures and model-call or response-validation failures remain retryable. Changing the model alone does not force a new review.</p>
+          <p>Each candidate’s model request can contain up to <strong>12 pending distinct claims</strong> and <strong>60,000 serialized input characters</strong>. Articles shared by multiple claims are sent once. Oversized inputs are left unverified instead of silently truncating evidence.</p>
+          <p>The finalization gate checks the saved verification status, input and policy fingerprints, and evidence/review ages. It does not fetch every article again at that point; cached content may have changed at the publisher since capture.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Artifacts: where the reasoning lives</summary>
+        <div class="detail-body">
+          <dl class="artifact-list">
+            <div><dt><code>source_policy.json</code></dt><dd>Trusted and blocked domains, contract-specific resolution domains, and evidence/review lifetimes.</dd></div>
+            <div><dt><code>cache/source_evidence/</code></dt><dd>Captured text and retrieval metadata, keyed by URL. This is the default location; configuration can relocate it.</dd></div>
+            <div><dt><code>evidence_reviews.json</code></dt><dd>Saved reviews keyed by review ID: verdict, exact excerpt, assessment flags, reason, reviewer, and time.</dd></div>
+            <div><dt><code>classified.json → _verification</code></dt><dd>A separate verification record within each reviewed classification. Confidence and evidence status remain distinct.</dd></div>
+            <div><dt><code>verification_report.json</code></dt><dd>Per-candidate results, claim checks, evidence references, reasons, review errors, and aggregate counts.</dd></div>
+          </dl>
+          <p>Illustrative automatic-review excerpt below. This shows the fields, not a complete runnable artifact; IDs and timestamps are generated during a real run.</p>
+          <pre><code>{
+  "verdict": "supported",
+  "excerpt": "The first release of the September index shows a year-over-year increase of 2.8%.",
+  "article_accessible": true,
+  "evidence_credible": true,
+  "settlement_match": true,
+  "time_relevant": true,
+  "reason": "The first release matches the contract's period, metric and threshold."
+}</code></pre>
+          <p>In automatic review, <code>supported</code> maps to a <code>verified</code> claim only after validation. A supported verdict requires all four flags to be true.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Run modes and interpreting the exit status</summary>
+        <div class="detail-body">
+          <p>From the repository root, replace <code>YOUR_RUN</code> with an existing run folder. These commands review saved classifications; they do not start a new scan.</p>
+          <pre><code># Fetch evidence as needed and review pending claims
+python3 step_4_verify/verify_classifications.py --run-dir logs/YOUR_RUN
+
+# Fetch evidence, but use saved reviews without model calls
+python3 step_4_verify/verify_classifications.py --run-dir logs/YOUR_RUN --manual
+
+# Use fresh cached evidence and saved reviews only
+python3 step_4_verify/verify_classifications.py --run-dir logs/YOUR_RUN --offline</code></pre>
+          <p><code>--model MODEL</code> selects the review model; otherwise <code>VERIFIER_MODEL</code> or the classifier’s model configuration is used. Automatic review uses the configured model-provider credentials. Manual mode can consume saved human reviews; it does not open an interactive review screen.</p>
+          <p><strong>Exit 0:</strong> all reviewed CERTAIN entries are verified, or no CERTAIN entries exist. <strong>Exit 1:</strong> at least one is contradicted or unverifiable. Read the report for the reason; a zero exit code alone does not demonstrate that any opportunities were found.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Limits of the evidence check</summary>
+        <div class="detail-body">
+          <p>The model assesses supplied text; it does not independently establish article authenticity or factual truth. Multiple URLs repeating the same announcement do not establish independent corroboration.</p>
+          <p>Unknown publishers are not automatically investigated or approved. A policy change or an approved alternative source may be needed. Inaccessible articles and PDFs need readable evidence.</p>
+          <p>The adversarial challenge and anomaly veto are separate model assessments, not equivalent to a successful article-level review. This page describes the regular CERTAIN verification path.</p>
+        </div>
+      </details>
+      <p class="caption source-note">Checked against the local implementation on October 2, 2026: <code>verification.py</code>, <code>article_review.py</code>, and <code>verify_classifications.py</code> in <code>step_4_verify/</code>, plus the finalization gate in <code>step_5_finalize/opportunity_manager.py</code>.</p>
+      <div class="article-links"><a href="index.html#pipeline">← Pipeline overview</a><a href="index.html#checks">Sizing and market checks →</a></div>
+    </section>
+  </main>
+  <footer class="container"><a class="wordmark" href="index.html"><span aria-hidden="true">Ψ</span> Pythia</a><p>Pipeline documentation</p></footer>
+</body>
+</html>
