@@ -1,445 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<link rel="stylesheet" href="shared.css">
-<link rel="stylesheet" href="classifier.css">
-<title>Classifier Detail — Kalshi/Polymarket Pipeline</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How Pythia classifies prediction markets: evidence inputs, CERTAIN requirements, validation, time horizons, and the handoff to verification.">
+  <title>Pythia — Classification</title>
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="verification.css">
+  <link rel="stylesheet" href="classifier.css">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header container">
+    <a class="wordmark" href="index.html" aria-label="Pythia overview"><span aria-hidden="true">Ψ</span> Pythia</a>
+    <p class="breadcrumb"><a href="index.html#pipeline">Pipeline</a> <span aria-hidden="true">/</span> Classification</p>
+  </header>
+  <main id="main">
+    <section class="hero container" aria-labelledby="page-title">
+      <p class="eyebrow">Stage 03</p>
+      <h1 id="page-title">Classification</h1>
+      <p class="lead">How researched facts become a judgment about a market’s outcome.</p>
+      <p class="intro">For each regular candidate, the classifier weighs evidence against the contract’s settlement rules and time horizon. It records a side, confidence, supporting and contradicting signals, and what could change its conclusion.</p>
+      <nav class="contents" aria-label="On this page"><span class="contents-label">On this page</span><a href="#reasoning">Evidence to judgment</a><a href="#validation">Validation</a><a href="#ttr">Time horizon</a><a href="#technical">Technical details</a></nav>
+    </section>
 
-<nav>
-  <a href="pipeline.html">Pipeline Overview</a>
-  <a href="classifier.html" class="active">Classifier Detail</a>
-  <a href="backtest.html">Backtest</a>
-</nav>
+    <section class="section container" id="reasoning" aria-labelledby="reasoning-title">
+      <div class="section-heading"><h2 id="reasoning-title">Evidence to judgment</h2><p>The model evaluates a specific contract, rather than predicting a topic in the abstract.</p></div>
+      <figure class="classification-map" aria-labelledby="classification-map-caption">
+        <figcaption id="classification-map-caption">One market through the classifier</figcaption>
+        <div class="classification-route">
+          <div class="input-stack">
+            <div><span class="document-lines" aria-hidden="true"></span><strong>Candidate</strong><span>Prices · rules · close date</span></div>
+            <span class="join" aria-hidden="true">+</span>
+            <div><span class="document-lines" aria-hidden="true"></span><strong>Research</strong><span>Facts · URLs · recent news</span></div>
+          </div>
+          <span class="flow-arrow" aria-hidden="true">→</span>
+          <div class="reasoning-node"><strong>LLM reasoning</strong><span class="weigh-icon" aria-hidden="true">⇄</span><span>Supporting evidence</span><span>Contradicting evidence</span><small>Does it match the rule<br>and remain true at settlement?</small></div>
+          <span class="flow-arrow" aria-hidden="true">→</span>
+          <div class="label-stack"><div><strong class="verified">CERTAIN</strong><span>Near-certainty judgment</span></div><div><strong class="uncertain">LIKELY</strong><span>Remaining uncertainty</span></div><div><strong>UNCLEAR</strong><span>Insufficient basis</span></div></div>
+        </div>
+        <p class="diagram-note">All outputs are model judgments. CERTAIN needs valid structure and evidence verification before it can qualify as an opportunity.</p>
+      </figure>
+      <p class="article-copy">Research supplies the current status, recent developments, and settlement context. With research injected, the API classifier is instructed to use those findings and copy their exact URLs into its signals, rather than repeat the searches.</p>
+      <details><summary>What the model is asked to consider</summary><div class="detail-body">
+        <p><strong>Support and contradiction:</strong> identify facts that favor the selected side and real evidence against it. The prompt discourages inventing hypothetical objections merely to fill the contradicting-signals list.</p>
+        <p><strong>Settlement:</strong> match the exact metric, units, release version, and definition. A related statistic may answer a different question.</p>
+        <p><strong>Change conditions:</strong> explain the specific evidence or scenario that would invalidate the conclusion. Record settlement ambiguity separately from confidence.</p>
+        <p><strong>Recent developments:</strong> account for late-breaking information. The configured recency window defaults to 14 days. The saved queries and summary are records of research, not proof that a search was executed.</p>
+      </div></details>
+    </section>
 
-<h1>Classifier — Full Reference</h1>
-<p class="subtitle">
-  How the LLM agent classifies candidates · search requirements · output schema · validation rules · time-to-resolution tiers
-</p>
+    <section class="section container" id="validation" aria-labelledby="validation-title">
+      <div class="section-heading"><h2 id="validation-title">Label and validity are separate</h2><p>Python checks the structured response after the model answers. A CERTAIN label alone is not enough.</p></div>
+      <figure class="requirements-map" aria-labelledby="requirements-caption">
+        <figcaption id="requirements-caption">Core requirements for a valid CERTAIN result</figcaption>
+        <div class="requirement-grid">
+          <div><strong>≥95%</strong><span>Model confidence</span></div>
+          <div><span class="signal-dots" aria-hidden="true">● ● ●</span><strong>≥3 reasons</strong><span>Plus ≥3 confirming signals</span></div>
+          <div><strong>0</strong><span>Contradicting signals</span></div>
+        </div>
+        <p class="diagram-note">Also required: recent developments, a nonempty change condition, at least three saved queries, valid field types, and applicable metric/future-event checks. Signal counts do not establish independent sources or factual truth.</p>
+      </figure>
+      <figure class="validation-example" aria-labelledby="validation-example-caption">
+        <figcaption id="validation-example-caption">Same confidence, different validation results <span>Hypothetical field combinations; all other checks assumed to pass</span></figcaption>
+        <div class="validation-row"><div class="sample-input"><strong>98% · CERTAIN</strong><span>3 reasons · 3 supporting signals<br>No contradicting signals</span></div><span class="flow-arrow" aria-hidden="true">→</span><div><strong class="verified">CERTAIN · valid</strong><span>Still needs challenge and verification</span></div></div>
+        <div class="validation-row"><div class="sample-input"><strong>98% · CERTAIN</strong><span>3 reasons · only 2 supporting signals<br>No contradicting signals</span></div><span class="flow-arrow" aria-hidden="true">→</span><div><strong class="uncertain">CERTAIN · invalid</strong><span>Label retained; structural requirement fails</span></div></div>
+        <div class="validation-row"><div class="sample-input"><strong>98% · CERTAIN</strong><span>3 reasons · 3 supporting signals<br>1 contradicting signal</span></div><span class="flow-arrow" aria-hidden="true">→</span><div><strong class="contradicted">LIKELY · invalid</strong><span>Explicit downgrade during this validation pass</span></div></div>
+        <p class="diagram-note">These show one call to the validator. The API classifier may request a correction for an invalid result that still says CERTAIN; finalization validates again.</p>
+      </figure>
+      <details><summary>Which checks invalidate, and which downgrade?</summary><div class="detail-body">
+        <p><strong>Invalid without necessarily changing the label:</strong> confidence below 95 for CERTAIN, fewer than three reasons or confirming signals, a missing change condition, or fewer than three saved queries for a non-UNCLEAR result. Errors are recorded in <code>_validation_errors</code>; <code>_valid</code> indicates whether the pass found any errors.</p>
+        <p><strong>Explicit downgrades:</strong> a CERTAIN result with contradicting signals or empty recent developments becomes LIKELY. Detected metric mismatch, certain future-event cases, and the long-horizon check below can also produce LIKELY.</p>
+        <p><strong>Field checks:</strong> confidence must be numeric, and the reasons, signal collections, and query collection must be lists. This is not a complete schema validator: some malformed values can fail before normalization, and checking counts cannot establish the truth of the contents.</p>
+        <p><strong>Evidence checks happen later:</strong> the classifier’s metric guard looks for recognized terms or aliases in the reasoning and signals. It does not read cited articles to establish support. <a href="verification.html">Verification checks those articles against the claims and contract.</a></p>
+      </div></details>
+    </section>
 
-<!-- ══════════════════════════════════════════════════════ TWO MODES -->
-<div class="section">
-  <h2>Two Classifier Modes</h2>
-  <div class="mode-grid">
+    <section class="section container" id="ttr" aria-labelledby="horizon-title">
+      <div class="section-heading"><h2 id="horizon-title">Time remaining changes the reasoning</h2><p>Today’s state may not be the state at settlement. The prompt asks for stronger grounds as the horizon grows.</p></div>
+      <figure class="horizon-map" aria-labelledby="horizon-caption">
+        <figcaption id="horizon-caption">Prompt guidance by time to close</figcaption>
+        <ol class="horizon-stages"><li><strong>≤7 days</strong><span>Check near-term catalysts</span></li><li><strong>8–30 days</strong><span>Standard scrutiny</span></li><li><strong>31–90 days</strong><span>Require stronger evidence</span></li><li><strong>91–365 days</strong><span>Structural grounds only</span></li><li><strong>&gt;365 days</strong><span>Logical or mathematical certainty</span></li></ol>
+        <p class="diagram-note">Qualitative reasoning guidance, not a probability curve. Near-term markets still need to pass every applicable check.</p>
+      </figure>
+      <p class="note"><strong>There is also a code-enforced rule:</strong> a CERTAIN candidate with more than 90 days to close and an implied market price below 90¢ is downgraded to LIKELY.</p>
+      <details><summary>Future-event and metric heuristics</summary><div class="detail-body">
+        <p>For matching future-event keywords and at least 14 days remaining, the prompt flags the difference between current conditions and the state after the event. The validator checks for forward-looking terms in saved queries and reasons; absence can turn CERTAIN into LIKELY or mark an existing LIKELY result invalid.</p>
+        <p>These are text heuristics. Mentioning a forecast does not prove the forecast is reliable, and a matching metric keyword does not prove the cited number is correct. Article-level support is checked in verification.</p>
+      </div></details>
+    </section>
 
-    <div class="mode-card">
-      <div class="mode-card-title">
-        Regular (Price-Filter) <span class="badge badge-file">build_regular_prompt()</span>
-      </div>
-      <ul>
-        <li><strong>Input:</strong> candidates from ScannerAgent — markets already priced ≥80–85c by the crowd</li>
-        <li><strong>Question asked:</strong> "Is the apparently-obvious outcome actually near-certain?"</li>
-        <li><strong>Used by:</strong> <code>incremental</code>, <code>full</code>, <code>deep</code>, <code>pm-*</code> scan modes</li>
-        <li>Classifier prompt includes: ticker, prices, volume, urgency score, close date, settlement rules, and any <span class="tip" data-tip="A flag raised when significant capital is deployed on the low-probability (opposite) side — suggesting someone may know something the crowd doesn't.">volume anomaly</span></li>
-        <li>Default assumption: the high-priced side is likely correct; look for reasons it isn't</li>
-      </ul>
-    </div>
-
-    <div class="mode-card anomaly">
-      <div class="mode-card-title">
-        Anomaly (Volume-First) <span class="badge badge-quant">build_anomaly_prompt()</span>
-      </div>
-      <ul>
-        <li><strong>Input:</strong> candidates from AnomalyScanner — markets at 20–79c with unusual HC capital ≥$10k</li>
-        <li><strong>Question asked:</strong> "Is the smart money right — is the market mispriced?"</li>
-        <li><strong>Used by:</strong> <code>anomaly</code> and <code>pm-anomaly</code> scan modes</li>
-        <li>Classifier prompt includes: implied HC dollars vs opposite dollars, HC-to-opposite ratio, settlement rules</li>
-        <li>Default assumption: price is below certainty threshold for a reason — look for what the smart money knows</li>
-      </ul>
-    </div>
-
-  </div>
-
-  <div class="callout purple">
-    Both modes share the <strong>same output schema</strong> and the same <code>validate_classification()</code> rules, so the Opportunity Manager handles them identically downstream. The difference is only in what question the agent is asked and what context appears in the candidate prompt.
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════ SEARCH REQUIREMENTS -->
-<div class="section">
-  <h2>Mandatory Search Sequence</h2>
-  <p style="font-size:11px;color:#a0aec0;margin-bottom:14px">
-    Minimum 3 searches required. The recency search is hardcoded mandatory — skipping it causes automatic downgrade to LIKELY.
-  </p>
-
-  <div class="search-box">
-    <div class="search-box-title">Regular (Price-Filter) classifier search sequence</div>
-    <div class="search-req">
-      <span class="search-num">A</span>
-      <div><strong>Current real-world status</strong> — What is the ground truth right now? Is the event underway, concluded, or still pending? Official sources preferred.</div>
-    </div>
-    <div class="search-req mandatory">
-      <span class="search-num" style="border-color:#0d9488;color:#5eead4">B</span>
-      <div>
-        <strong>Recency search</strong> <em>(MANDATORY — cannot skip)</em><br>
-        Query: <code>"[topic] news [current month year]"</code> or <code>"[topic] update [current month]"</code><br>
-        Catches late-breaking developments that could invalidate an apparently obvious outcome. Missing this forces LIKELY regardless of confidence.
-      </div>
-    </div>
-    <div class="search-req">
-      <span class="search-num">C+</span>
-      <div><strong>Settlement criteria</strong> — How exactly will Kalshi resolve this market? The settlement source URL and rules_primary text are provided. Verify that the real-world outcome cleanly maps to the settlement rule — mismatches are a contradicting signal.</div>
-    </div>
-    <div class="search-req">
-      <span class="search-num">D</span>
-      <div><strong>Volume anomaly (if flagged)</strong> — If the candidate includes a VOLUME ANOMALY block, there is a mandatory additional search: why might someone have large conviction on the opposite (low-probability) side? Unexplained anomalous volume must be listed as a contradicting signal if no explanation is found.</div>
-    </div>
-  </div>
-
-  <div class="search-box" style="border-color:#b45309;background:rgba(180,83,9,0.20);">
-    <div class="search-box-title" style="color:#fcd34d">Anomaly classifier search sequence</div>
-    <div class="search-req">
-      <span class="search-num" style="border-color:#b45309;color:#fcd34d">A</span>
-      <div><strong>Ground truth status</strong> — What is the current real-world status of this event? Is the outcome already determined or still open?</div>
-    </div>
-    <div class="search-req">
-      <span class="search-num" style="border-color:#0d9488;color:#5eead4">B</span>
-      <div><strong>Recency search</strong> <em>(MANDATORY)</em> — Volume often front-runs public news. Search for recent announcements, policy decisions, or catalysts that could explain why large capital is already positioned on the high-confidence side.</div>
-    </div>
-    <div class="search-req">
-      <span class="search-num" style="border-color:#b45309;color:#fcd34d">C+</span>
-      <div><strong>Smart money rationale</strong> — Why would sophisticated players put $10k+ on a 20–79c outcome? Could the volume be hedging, market-making, or a known public event (which weakens the signal)? Or is there information asymmetry at play?</div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════ OUTPUT SCHEMA -->
-<div class="section">
-  <h2>Output Schema — All Fields</h2>
-  <p style="font-size:11px;color:#a0aec0;margin-bottom:14px">
-    The agent must output exactly this JSON structure. No additional fields, no markdown wrapping.
-    <code style="background:#3e4400;padding:2px 6px;border-radius:3px;color:#fde68a;font-size:10px">validate_classification()</code>
-    enforces the rules post-output.
-  </p>
-
-  <table class="schema-table">
-    <thead>
-      <tr>
-        <th>Field</th>
-        <th>Type</th>
-        <th>Description &amp; Requirements</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>classification</td>
-        <td>string</td>
-        <td>
-          <span class="req-badge req-all">ALL</span>&nbsp;
-          One of <code>"CERTAIN"</code> <code>"LIKELY"</code> <code>"UNCLEAR"</code>.
-          Only <strong>CERTAIN</strong> classifications proceed to the Opportunity Manager.
-          LIKELY and UNCLEAR are logged but not acted on.
-        </td>
-      </tr>
-      <tr>
-        <td>confidence_score</td>
-        <td>number (0–100)</td>
-        <td>
-          <span class="req-badge req-certain">CERTAIN</span>&nbsp;
-          The agent's numeric certainty. <strong>Must be ≥ 95 for CERTAIN</strong>.
-          Used downstream for <span class="tip" data-tip="Edge × (365 / days_to_close) — annualises the edge to allow fair comparison across different time horizons.">annualised edge</span> calculation and backtest confidence bands.
-        </td>
-      </tr>
-      <tr>
-        <td>high_confidence_side</td>
-        <td>string</td>
-        <td>
-          <span class="req-badge req-all">ALL</span>&nbsp;
-          <code>"YES"</code> or <code>"NO"</code> — which side the agent is confident will win.
-          Used by the backtest to compare against the actual settlement result.
-        </td>
-      </tr>
-      <tr>
-        <td>reasons</td>
-        <td>array of strings</td>
-        <td>
-          <span class="req-badge req-certain">CERTAIN</span>&nbsp;
-          Plain-language justifications. <strong>CERTAIN requires ≥ 3 reasons.</strong>
-          Top 3 are shown in the terminal notification. Should be distinct — not restatements of each other.
-        </td>
-      </tr>
-      <tr>
-        <td>confirming_signals</td>
-        <td>array of objects</td>
-        <td>
-          <span class="req-badge req-certain">CERTAIN</span>&nbsp;
-          Facts found during research that support the high-confidence outcome.
-          Each object: <code>{"{"}"fact": "...", "source_url": "..."{"}"}</code>.
-          <strong>CERTAIN requires ≥ 3</strong>. Source URLs are required — "no URL" should not exist for CERTAIN.
-        </td>
-      </tr>
-      <tr>
-        <td>contradicting_signals</td>
-        <td>array of objects</td>
-        <td>
-          <span class="req-badge req-certain">CERTAIN</span>&nbsp;
-          Facts that argue against the obvious outcome.
-          Same format as confirming_signals.
-          <strong>CERTAIN requires exactly 0</strong> — any contradicting signal auto-triggers downgrade to LIKELY.
-          Cluster pricing inconsistencies and unexplained volume anomalies also count here.
-        </td>
-      </tr>
-      <tr>
-        <td>what_would_change_this</td>
-        <td>string</td>
-        <td>
-          <span class="req-badge req-all">ALL</span>&nbsp;
-          Required for all classifications. The specific scenario or evidence that would flip the outcome.
-          Empty string fails validation. Forces the agent to articulate its falsifiability conditions.
-          Shown in the terminal notification under "What would change this".
-        </td>
-      </tr>
-      <tr>
-        <td>settlement_risk</td>
-        <td>string</td>
-        <td>
-          Any scenario where the platform might resolve differently than the real-world outcome —
-          e.g., ambiguous settlement rules, jurisdiction-dependent definitions, timing edge cases.
-          Empty string is acceptable if no settlement risk exists.
-          Shown in the terminal notification.
-        </td>
-      </tr>
-      <tr>
-        <td>recent_developments</td>
-        <td>string</td>
-        <td>
-          <span class="req-badge req-certain">CERTAIN</span>&nbsp;
-          The findings from the mandatory recency search.
-          <strong>Must be non-empty for CERTAIN</strong> — "None found" only if the search genuinely returned nothing.
-          Empty = auto-downgrade to LIKELY (recency search was skipped).
-          Window controlled by <code>KALSHI_RECENCY_DAYS</code> env var (default: 14 days).
-        </td>
-      </tr>
-      <tr>
-        <td>searched_for</td>
-        <td>array of strings</td>
-        <td>
-          <span class="req-badge req-all">ALL</span>&nbsp;
-          List of actual queries performed. <strong>All classifications require ≥ 3</strong>.
-          The recency query (Search B) must appear here.
-          Used to audit whether the agent actually searched before classifying.
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <pre><span class="c">// Example CERTAIN output (all fields populated)</span>
-{
-  <span class="n">"classification"</span>: <span class="s">"CERTAIN"</span>,
-  <span class="n">"confidence_score"</span>: 98,
-  <span class="n">"high_confidence_side"</span>: <span class="s">"YES"</span>,
-  <span class="n">"reasons"</span>: [
-    <span class="s">"Company announced IPO withdrawal on May 3rd per SEC filing"</span>,
-    <span class="s">"Lead underwriter Goldman Sachs confirmed no deal in 2025"</span>,
-    <span class="s">"Market closes June 30 — no IPO path exists in 44 days"</span>
-  ],
-  <span class="n">"confirming_signals"</span>: [
-    {<span class="n">"fact"</span>: <span class="s">"SEC Form S-1 withdrawal filed 2025-05-03"</span>, <span class="n">"source_url"</span>: <span class="s">"https://sec.gov/..."</span>},
-    {<span class="n">"fact"</span>: <span class="s">"Goldman Sachs statement: no 2025 deal"</span>,   <span class="n">"source_url"</span>: <span class="s">"https://wsj.com/..."</span>},
-    {<span class="n">"fact"</span>: <span class="s">"No roadshow or lockup filing as of May 2026"</span>, <span class="n">"source_url"</span>: <span class="s">"https://..."</span>}
-  ],
-  <span class="n">"contradicting_signals"</span>: [],
-  <span class="n">"what_would_change_this"</span>: <span class="s">"Surprise S-1 refiling with an accelerated closing under 44 days"</span>,
-  <span class="n">"settlement_risk"</span>: <span class="s">""</span>,
-  <span class="n">"recent_developments"</span>: <span class="s">"No new IPO news found in the past 14 days"</span>,
-  <span class="n">"searched_for"</span>: [
-    <span class="s">"[Company] IPO status 2025"</span>,
-    <span class="s">"[Company] IPO news May 2026"</span>,
-    <span class="s">"Kalshi [ticker] settlement criteria"</span>
-  ]
-}</pre>
-</div>
-
-<!-- ══════════════════════════════════════════════════════ VALIDATION RULES -->
-<div class="section">
-  <h2>Validation Rules — <code style="font-size:12px;color:#fde68a">validate_classification()</code></h2>
-  <p style="font-size:11px;color:#a0aec0;margin-bottom:14px">
-    Applied in <code>kalshi_cron.py finalize</code> before the opportunity manager processes results.
-    Violations auto-downgrade to LIKELY and are recorded in <code>_validation_errors</code>.
-  </p>
-
-  <div class="validation-grid">
-    <div class="val-card val-certain">
-      <div class="val-card-title">CERTAIN — required conditions</div>
-      <ul>
-        <li><code>confidence_score</code> ≥ 95</li>
-        <li><code>len(reasons)</code> ≥ 3</li>
-        <li><code>len(confirming_signals)</code> ≥ 3</li>
-        <li><code>len(contradicting_signals)</code> == 0</li>
-        <li><code>recent_developments</code> is non-empty</li>
-      </ul>
-    </div>
-
-    <div class="val-card val-any">
-      <div class="val-card-title">All classifications — always required</div>
-      <ul>
-        <li><code>what_would_change_this</code> is non-empty</li>
-        <li><code>len(searched_for)</code> ≥ 3</li>
-        <li><code>confidence_score</code> is numeric (int or float)</li>
-        <li><code>reasons</code> is a list</li>
-        <li><code>confirming_signals</code> is a list</li>
-        <li><code>contradicting_signals</code> is a list</li>
-        <li><code>searched_for</code> is a list</li>
-      </ul>
-    </div>
-
-    <div class="val-card val-auto">
-      <div class="val-card-title">Auto-downgrade triggers (CERTAIN → LIKELY)</div>
-      <ul>
-        <li>Any <code>contradicting_signals</code> entry</li>
-        <li>Empty <code>recent_developments</code></li>
-        <li><code>confidence_score</code> &lt; 95</li>
-        <li>Fewer than 3 reasons or confirming signals</li>
-        <li>Non-numeric <code>confidence_score</code> → set to 0</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="callout amber">
-    <strong>Devil's Advocate pass</strong> (post-classification): for each CERTAIN result, the agent runs a second check asking for the strongest counter-argument. If a coherent argument (2+ substantive sentences with real-world grounding) can be constructed, the classification is downgraded to LIKELY, the argument is added as a <code>contradicting_signal</code>, and the confidence score is lowered. This happens <em>before</em> the JSON is written to <code>classified.json</code>.
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════ TTR -->
-<div class="section ttr-section" id="ttr">
-  <h2>Time-to-Resolution Factor <span class="badge badge-new">new</span></h2>
-  <p style="font-size:11px;color:#a0aec0;margin-bottom:14px">
-    The <code>DAYS TO CLOSE</code> field from the candidate prompt is used to calibrate how strictly CERTAIN is applied.
-    Near-term markets have limited surface area for surprises; far-horizon markets carry compounding black-swan risk.
-    This is a soft constraint — it guides the agent's reasoning but is not enforced by <code>validate_classification()</code>.
-  </p>
-
-  <table class="ttr-table">
-    <thead>
-      <tr>
-        <th>Time Remaining</th>
-        <th>Difficulty</th>
-        <th>Rationale</th>
-        <th>Guidance</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="t-easy">
-        <td>≤ 7 days</td>
-        <td style="color:#4ade80">Easy</td>
-        <td>Little time for new information, policy reversals, or unexpected events. The real-world situation is essentially locked in.</td>
-        <td>If current reality strongly favors the outcome and no near-term catalyst for reversal exists, CERTAIN is appropriate with normal scrutiny.</td>
-      </tr>
-      <tr class="t-std">
-        <td>8–30 days</td>
-        <td style="color:#94a3b8">Standard</td>
-        <td>Normal window. Some risk of new developments but limited.</td>
-        <td>Apply the standard threshold. Require 3 confirming signals. Do not relax or tighten beyond the base rules.</td>
-      </tr>
-      <tr class="t-hard">
-        <td>31–90 days</td>
-        <td style="color:#fb923c">Hard</td>
-        <td>Multiple weeks allow for: earnings surprises, regulatory decisions, geopolitical events, organizational changes.</td>
-        <td>Require stronger evidence. Lean toward LIKELY unless there is a structural impossibility. Flag any uncertain assumptions explicitly.</td>
-      </tr>
-      <tr class="t-vhard">
-        <td>91–365 days</td>
-        <td style="color:#f87171">Very Hard</td>
-        <td>A full quarter or more. Macro conditions, leadership changes, black swans become material probabilities.</td>
-        <td>Only structural impossibilities should be CERTAIN — e.g., an acquired company that legally cannot IPO, a mathematical upper bound on a statistic. Standard "current trajectory" reasoning insufficient.</td>
-      </tr>
-      <tr class="t-never">
-        <td>&gt; 365 days</td>
-        <td style="color:#e879f9">Almost Never</td>
-        <td>Year-plus horizon. Essentially any outcome is possible given sufficient time.</td>
-        <td>Reserve CERTAIN for logical or mathematical impossibilities only. LIKELY is almost always the ceiling here.</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h3>Category-Specific Notes</h3>
-  <div class="cat-grid">
-
-    <div class="cat-card">
-      <div class="cat-card-title">🗳 Political (elections, legislation, appointments)</div>
-      <ul>
-        <li><strong>Far-horizon markets are inherently unpredictable</strong> — incumbents lose, bills fail on procedural votes, nominees withdraw</li>
-        <li>Election markets: never CERTAIN more than ~7 days out unless an opponent withdrew, race was cancelled, or only one party filed</li>
-        <li>Appointment markets: confirmation is near-certain only after a Senate vote is scheduled and counted — not just after nomination</li>
-        <li>Legislative markets: floor vote scheduled ≠ passage; even after passage, executive signature is a separate event</li>
-        <li>Watch for: special elections, recalls, resignations, and redistricting</li>
-      </ul>
-    </div>
-
-    <div class="cat-card">
-      <div class="cat-card-title">🏢 IPO / Corporate Actions</div>
-      <ul>
-        <li><strong>Timelines shift constantly</strong> — S-1 filings are withdrawn, postponed, or repriced without warning</li>
-        <li>"By [month]" markets: CERTAIN NO only if: (1) company was acquired, (2) company went bankrupt, (3) explicit public withdrawal with no window to re-file before close, or (4) the month has passed</li>
-        <li>Mergers &amp; acquisitions: "Will X acquire Y by [date]?" — CERTAIN only after regulatory approvals and shareholder votes are complete</li>
-        <li>Settlement risk is high: Kalshi may resolve based on first trading day on exchange, not signing date or announcement</li>
-        <li>Watch for: SPAC alternatives, direct listings (may not count), and dual-class structures that can delay public float</li>
-      </ul>
-    </div>
-
-    <div class="cat-card">
-      <div class="cat-card-title">📊 Economic Indicators (CPI, GDP, unemployment, Fed rate)</div>
-      <ul>
-        <li><strong>Only near-term prints with known underlying data can be CERTAIN</strong></li>
-        <li>Monthly data releases (CPI, jobs report): can be CERTAIN 1–3 days before release if nowcast models converge and no revisions are pending</li>
-        <li>Fed rate decisions: CERTAIN only after the FOMC statement is published — market pricing of 95%+ is not the same as a decision</li>
-        <li>GDP: subject to multiple revisions; "advance" estimate ≠ final; be cautious about what the settlement criteria specifies (advance vs. second vs. final)</li>
-        <li>Longer-horizon economic markets (annual totals, year-end indicators): almost never CERTAIN</li>
-      </ul>
-    </div>
-
-    <div class="cat-card">
-      <div class="cat-card-title">⚽ Sports</div>
-      <ul>
-        <li><strong>Only CERTAIN for games happening within days with results verifiable</strong></li>
-        <li>Head-to-head outcomes: CERTAIN only if the game has already been played (live result) or the opponent forfeited/withdrew</li>
-        <li>"Champion by end of season" markets with many games remaining: almost never CERTAIN regardless of standings</li>
-        <li>Player performance markets: injury, lineup, and weather create non-trivial uncertainty even in games days away</li>
-        <li>Settlement risk: check whether Kalshi settles on the final result, including overtime/shootout, or on regulation only</li>
-        <li>Watch for: schedule changes, disqualifications, venue switches, weather cancellations</li>
-      </ul>
-    </div>
-
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════ CLUSTER CONTEXT -->
-<div class="section">
-  <h2>Cluster Context — Market Grouping Input</h2>
-  <p style="font-size:11px;color:#a0aec0;margin-bottom:14px">
-    Each candidate prompt may include a CLUSTER CONTEXT block listing sibling markets from the same event.
-    This is appended automatically by <code>market_clusterer.py</code> before the classifier receives the candidate.
-  </p>
-
-  <div class="callout teal">
-    <strong>Cluster context rules for the classifier:</strong>
-    <ul style="margin-top:6px;padding-left:14px;list-style:disc;color:#94a3b8;font-size:11px;line-height:1.6">
-      <li>Classify the primary market on its own merits first — don't average across siblings</li>
-      <li>If a sibling is priced inconsistently (e.g., "by June" NO@90c vs "by September" NO@80c for a cumulative event), treat the inconsistency as a <strong>contradicting signal</strong> — it means the crowd is logically inconsistent and the market may be wrong</li>
-      <li>If siblings are all pricing the same direction strongly, this can reinforce a CERTAIN classification — it means multiple independent markets have converged</li>
-      <li>If a <code>[!] PRICING INCONSISTENCY DETECTED</code> block appears, it was flagged by the monotonicity check and must be addressed in reasoning</li>
-    </ul>
-  </div>
-
-  <pre><span class="c">// Example CLUSTER CONTEXT block (appended to candidate prompt)</span>
-CLUSTER CONTEXT — 4 related markets under the same event:
-  [NO@91c] Will Databricks IPO by March 2026?
-  [NO@87c] Will Databricks IPO by April 2026?
-  [NO@82c] Will Databricks IPO by May 2026?
-
-[!] PRICING INCONSISTENCY DETECTED:
-  - 'Will Databricks IPO by March 2026?' at 91c > 'Will Databricks IPO by April 2026?' at 87c
-    (later deadline should price >= for a cumulative outcome)
-
-Note: classify this market on its own merits.
-Sibling markets share the same underlying event — ensure your conclusion is consistent with them.</pre>
-</div>
-
-<p style="margin-top:20px;font-size:10px;color:#4a5000;">
-  classifier.py · market_clusterer.py · kalshi_cron.py · Updated May 2026
-</p>
-
+    <section class="section container" id="technical" aria-labelledby="technical-title">
+      <div class="section-heading"><h2 id="technical-title">Technical details</h2></div>
+      <details><summary>What is saved for each candidate</summary><div class="detail-body">
+        <dl class="artifact-list">
+          <div><dt><code>classification · confidence_score · high_confidence_side</code></dt><dd>The label, model confidence, and selected YES or NO side. Confidence is a model estimate, not a measured success rate.</dd></div>
+          <div><dt><code>reasons · confirming_signals · contradicting_signals</code></dt><dd>The argument and its evidence. Signals pair a fact with a source URL from the research.</dd></div>
+          <div><dt><code>recent_developments · searched_for</code></dt><dd>A recency summary and recorded research queries. UNCLEAR is exempt from the validator’s three-query minimum.</dd></div>
+          <div><dt><code>what_would_change_this · settlement_risk</code></dt><dd>Conditions that could reverse the conclusion, plus possible differences between the real-world event and contract resolution.</dd></div>
+          <div><dt><code>_valid · _validation_errors · _model_provenance</code></dt><dd>Validation outcome, detected problems, and attribution. Candidate data and classification are saved together in <code>classified.json</code>.</dd></div>
+        </dl>
+      </div></details>
+      <details><summary>Agent-led and API classification</summary><div class="detail-body">
+        <p>The full runner’s regular path without <code>--model</code> asks the coordinating agent to classify each ticker in context. With an explicit model, it directs classification through the standalone API runner. The standalone script also supports preparing subagent chunks and merging completed results; preparing chunks alone does not classify them.</p>
+        <p>To explicitly use the API path after research, replace <code>YOUR_RUN</code> with a folder name under the configured log directory, and <code>MODEL</code> with the configured provider’s model ID:</p>
+        <pre><code>python3 step_3_classification/classify_all.py --run-dir YOUR_RUN --mode api --model MODEL</code></pre>
+        <p>Here <code>--run-dir</code> takes the run folder name, unlike the verifier’s <code>--run-dir logs/YOUR_RUN</code> path. API classification needs provider credentials.</p>
+        <p>The API research-injection helper includes the summary and up to six findings and six queries. It instructs the model to reuse this research; the API client does not supply browsing tools. The agent-led path marks missing usable research UNCLEAR, but the standalone API path can still call the model without research.</p>
+      </div></details>
+      <details><summary>Retries, checkpoints, and resuming</summary><div class="detail-body">
+        <p>The API classifier allows a second attempt for malformed JSON or a still-CERTAIN result that fails validation. The outer runner has additional retries for selected API failures; exhausted failures are saved as UNCLEAR.</p>
+        <p>In API mode, results save after each candidate through a temporary file and atomic replacement. Existing ticker results are skipped on resume. A lockfile checks for overlapping runs. Resume does not automatically reclassify a ticker whose research has changed.</p>
+      </div></details>
+      <details><summary>Anomaly candidates use different labels</summary><div class="detail-body">
+        <p>Anomaly candidates are scored from market data, producing <strong>STRONG / WATCH / SKIP</strong>. WATCH and STRONG receive a model check for public explanations; a sufficiently confident veto reduces the score and recalculates the tier.</p>
+        <p>This differs from the regular evidence-based CERTAIN / LIKELY / UNCLEAR path. The anomaly signal score is stored in <code>confidence_score</code> for compatibility, so it should not be read as the regular model’s probability estimate. STRONG anomalies have a separate opportunity route.</p>
+      </div></details>
+      <p class="caption source-note">Checked against the local implementation on October 2, 2026: <code>step_3_classification/classifier.py</code>, <code>classify_all.py</code>, and <code>pythia-main</code>.</p>
+      <div class="article-links"><a href="index.html#stage-classify">← Pipeline overview</a><a href="verification.html">Next: evidence verification →</a></div>
+    </section>
+  </main>
+  <footer class="container"><a class="wordmark" href="index.html"><span aria-hidden="true">Ψ</span> Pythia</a><p>Pipeline documentation</p></footer>
 </body>
 </html>
